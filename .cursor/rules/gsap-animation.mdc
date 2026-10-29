@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+---
+description: GSAP animation implementation and performance standards
+globs: src/**/*.{tsx,ts,jsx,js}
+alwaysApply: false
+---
+# GSAP Animation Standards
+
+- Inspect installed GSAP and framework integration versions before using APIs. Do not assume a plugin is installed.
+- Prefer @gsap/react and useGSAP() in React projects when compatible with the existing setup.
+- Register GSAP plugins correctly and only once where appropriate.
+- Scope selectors to component roots. Avoid global selectors that can animate unrelated elements.
+- Ensure timelines, event listeners, ScrollTriggers, and other resources are cleaned up correctly on unmount and re-render.
+- Make animations safe under React Strict Mode and avoid duplicate timelines or ScrollTriggers.
+- Prefer transform and opacity for smooth animation. Avoid repeatedly animating layout-triggering properties when possible.
+- Use ScrollTrigger deliberately. Avoid excessive pinned sections, competing scroll effects, and unnecessary scrub animations.
+- Coordinate animation timing, easing, stagger, and transitions into a coherent motion system.
+- Avoid animating every element. Motion must support hierarchy, storytelling, or usability.
+- Respect prefers-reduced-motion and provide meaningful non-animated behavior.
+- Keep interactions responsive on touch devices and avoid hover-only essential functionality.
+- For video backgrounds, consider autoplay restrictions, muted playback, playsInline, poster frames, loading strategy, and mobile data usage.
+- Test scrolling, resizing, route changes, and component remounting when applicable.
+- Do not claim an animation works until it has been verified in the browser when browser access is available.

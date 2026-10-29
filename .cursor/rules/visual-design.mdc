@@ -1,0 +1,24 @@
+---
+alwaysApply: true
+---
+---
+description: Visual design and creative frontend standards
+globs: src/**/*.{tsx,ts,jsx,js,css,scss}
+alwaysApply: false
+---
+# Visual Design Standards
+
+- Treat art direction and visual quality as core product requirements, not final polish.
+- Before designing, inspect the available assets and existing design system. Use supplied assets as the primary visual reference.
+- Never invent asset filenames or replace supplied media with stock images without a clear reason.
+- Aim for a distinctive, coherent creative direction rather than a generic SaaS template.
+- Prioritize typography, hierarchy, composition, negative space, contrast, rhythm, and intentional image crops.
+- Establish reusable design tokens for colors, typography, spacing, radii, and motion where appropriate.
+- Avoid arbitrary gradients, excessive glassmorphism, repetitive card grids, unnecessary borders, and decorative effects without purpose.
+- Design the hero and first viewport deliberately before expanding into secondary sections.
+- Make desktop, tablet, and mobile layouts intentional. Do not merely shrink the desktop design.
+- Use responsive images, explicit dimensions or aspect ratios, and appropriate loading strategies to reduce layout shift.
+- Preserve semantic HTML, keyboard navigation, readable contrast, and visible focus states.
+- Respect prefers-reduced-motion and provide usable fallbacks for motion-heavy experiences.
+- Validate the actual browser rendering when browser tools are available; do not claim visual verification without inspecting it.
+- When a visual change is requested, explain the intended effect briefly and implement it without unrelated redesigns.

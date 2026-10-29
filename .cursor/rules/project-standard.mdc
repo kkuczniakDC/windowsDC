@@ -1,0 +1,28 @@
+---
+description: Core engineering standards for the entire project
+alwaysApply: true
+---
+# Project Standards
+
+- Inspect the existing codebase before making changes. Never assume the app is a blank project.
+- Preserve the current framework, package manager, architecture, and working functionality unless a change is justified.
+- Prefer small, focused, reversible changes over unnecessary rewrites.
+- Reuse existing components, utilities, design tokens, and installed dependencies before creating new ones.
+- Do not install dependencies unless needed. Explain the reason before adding a significant dependency.
+- Keep components cohesive, typed, accessible, and maintainable. Avoid giant components and duplicated logic.
+- Never fabricate asset paths, package APIs, environment variables, or project requirements. Inspect the repository and verify assumptions.
+- Treat assets/ as read-only source material unless explicitly instructed otherwise. Never delete, rename, move, or overwrite assets without permission.
+- Avoid unrelated refactors and do not overwrite user changes.
+- Run relevant lint, typecheck, build, and tests when available. Report checks that could not be run.
+- After changes, summarize files changed, behavior affected, checks performed, and known issues.
+- Ask a concise question when a missing decision materially affects architecture or visual direction; otherwise make a reasonable, reversible choice.
+
+## Planning Before Implementation
+
+- For major creative, architectural, and technical decisions, collaborate with the user before implementation.
+- When the user is discussing ideas, exploring concepts, or planning the project, do not modify files, install dependencies, generate the application, or start implementation until explicitly asked.
+- Help define the concept, compare approaches, explain trade-offs, identify risks, and maintain an agreed implementation plan.
+- Ask focused questions when important decisions remain unresolved. Avoid asking about details that can be decided later.
+- Distinguish between brainstorming, planning, and implementation requests.
+- Once implementation is explicitly authorized, work in small, verifiable stages.
+- Before large architectural changes or destructive operations, explain the intended change and obtain approval.

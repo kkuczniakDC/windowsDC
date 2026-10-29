@@ -1,0 +1,115 @@
+.footer {
+  padding: clamp(5rem, 10vw, 9rem) var(--page-gutter) var(--space-6);
+  background: var(--color-ink);
+  color: var(--color-warm-paper);
+}
+
+.inner {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+}
+
+.lead {
+  display: grid;
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warm-paper) 25%, transparent);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.brand {
+  grid-column: 1 / span 4;
+  font-size: 0.85rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.statement {
+  max-width: 18ch;
+  grid-column: 6 / -1;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5.4vw, 5.6rem);
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+.links {
+  display: grid;
+  padding-block: var(--space-12);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warm-paper) 25%, transparent);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.links > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.links > div:first-child {
+  grid-column: 6 / span 3;
+}
+
+.links > div:last-child {
+  grid-column: 9 / -1;
+}
+
+.links p {
+  margin-bottom: var(--space-2);
+  color: var(--color-glass-grey);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.links a {
+  font-size: 0.95rem;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 180ms var(--ease-out);
+}
+
+.links a:hover {
+  text-decoration-color: currentColor;
+}
+
+.legal {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-top: var(--space-6);
+  color: color-mix(in srgb, var(--color-warm-paper) 65%, transparent);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 47.99rem) {
+  .lead,
+  .links {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .brand,
+  .statement,
+  .links > div:first-child,
+  .links > div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .statement {
+    margin-top: var(--space-16);
+    font-size: clamp(2.6rem, 13vw, 4.5rem);
+  }
+
+  .links {
+    gap: var(--space-10);
+  }
+
+  .legal {
+    flex-direction: column;
+  }
+}

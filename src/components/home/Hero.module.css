@@ -1,0 +1,228 @@
+.hero {
+  position: relative;
+  display: grid;
+  min-height: max(47.5rem, 100svh);
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-warm-paper);
+  grid-template-columns: 5fr 7fr;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: clamp(9rem, 16vh, 12rem) clamp(2rem, 5vw, 6rem) clamp(5rem, 9vh, 7rem)
+    var(--page-gutter);
+  flex-direction: column;
+}
+
+.copy::after {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: -1px;
+  width: 1px;
+  height: 100%;
+  background: color-mix(in srgb, var(--color-warm-paper) 34%, transparent);
+  content: "";
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: draw-line 900ms 100ms var(--ease-out) forwards;
+}
+
+.copy h1 {
+  width: min(9.5ch, 58vw);
+  margin-top: clamp(2rem, 5vh, 4rem);
+  font-size: clamp(4.8rem, 8.3vw, 8.6rem);
+}
+
+.copy h1 span {
+  display: block;
+  opacity: 0;
+  transform: translateY(1.5rem);
+  animation: reveal-copy 720ms var(--ease-out) forwards;
+}
+
+.copy h1 span:first-child {
+  animation-delay: 180ms;
+}
+
+.copy h1 span:last-child {
+  color: var(--color-natural-light);
+  font-style: italic;
+  animation-delay: 280ms;
+}
+
+.intro {
+  max-width: 31rem;
+  margin-top: clamp(2rem, 5vh, 4rem);
+  font-size: clamp(1.05rem, 1.25vw, 1.3rem);
+  line-height: 1.45;
+  opacity: 0;
+  animation: reveal-copy 600ms 520ms var(--ease-out) forwards;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  margin-top: var(--space-8);
+  opacity: 0;
+  animation: reveal-copy 600ms 680ms var(--ease-out) forwards;
+}
+
+.visual {
+  position: relative;
+  min-width: 0;
+  background: #26322e;
+}
+
+.visual picture {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 61% center;
+  animation: hero-settle 1300ms var(--ease-out) both;
+}
+
+.caption {
+  position: absolute;
+  z-index: 2;
+  right: var(--page-gutter);
+  bottom: 2rem;
+  display: flex;
+  color: var(--color-warm-paper);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  flex-direction: column;
+  text-shadow: 0 1px 1rem rgb(0 0 0 / 60%);
+}
+
+.caption span {
+  color: var(--color-natural-light);
+}
+
+@keyframes draw-line {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes reveal-copy {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.025);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 74.99rem) {
+  .hero {
+    grid-template-columns: 44% 56%;
+  }
+
+  .copy h1 {
+    font-size: clamp(4.2rem, 8vw, 6.7rem);
+  }
+
+  .actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .hero {
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+  }
+
+  .visual {
+    min-height: 56svh;
+    order: 1;
+  }
+
+  .image {
+    object-position: center 45%;
+  }
+
+  .copy {
+    min-height: 44svh;
+    justify-content: flex-start;
+    padding: var(--space-10) var(--page-gutter) var(--space-12);
+    order: 2;
+  }
+
+  .copy::after {
+    top: -1px;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation-name: draw-line-mobile;
+  }
+
+  .copy h1 {
+    width: 100%;
+    margin-top: var(--space-8);
+    font-size: clamp(3.4rem, 15vw, 5.4rem);
+  }
+
+  .intro {
+    margin-top: var(--space-8);
+    font-size: 1rem;
+  }
+
+  .actions {
+    width: 100%;
+    margin-top: var(--space-8);
+  }
+
+  .actions :global(.button) {
+    width: 100%;
+  }
+
+  .caption {
+    right: var(--page-gutter);
+    bottom: 1rem;
+    left: var(--page-gutter);
+  }
+}
+
+@keyframes draw-line-mobile {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy::after,
+  .copy h1 span,
+  .intro,
+  .actions,
+  .image {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}

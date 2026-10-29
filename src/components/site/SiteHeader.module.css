@@ -1,0 +1,117 @@
+.header {
+  position: absolute;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: var(--color-warm-paper);
+}
+
+.nav {
+  display: grid;
+  width: min(100%, var(--page-max));
+  min-height: 5.5rem;
+  align-items: center;
+  padding-inline: var(--page-gutter);
+  margin-inline: auto;
+  grid-template-columns: minmax(11rem, 1fr) auto minmax(11rem, 1fr);
+}
+
+.brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: baseline;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 680;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.brand small {
+  color: currentColor;
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  opacity: 0.62;
+}
+
+.primaryLinks {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.primaryLinks a,
+.consultation {
+  position: relative;
+  font-size: 0.75rem;
+  font-weight: 620;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.primaryLinks a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.45rem;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 200ms var(--ease-out);
+}
+
+.primaryLinks a:hover::after,
+.primaryLinks a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.consultation {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.6rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid currentColor;
+}
+
+.consultation span {
+  transition: transform 200ms var(--ease-out);
+}
+
+.consultation:hover span {
+  transform: translate(0.18rem, -0.18rem);
+}
+
+@media (max-width: 63.99rem) {
+  .nav {
+    min-height: 4.75rem;
+    grid-template-columns: 1fr auto;
+  }
+
+  .primaryLinks {
+    display: none;
+  }
+}
+
+@media (max-width: 35rem) {
+  .brand {
+    font-size: 0.78rem;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .consultation {
+    font-size: 0.65rem;
+  }
+}
