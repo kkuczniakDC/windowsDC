@@ -75,10 +75,28 @@ export function SignatureSequence() {
         () => {
           element.dataset.enhanced = "true";
 
+          const stage = element.querySelector<HTMLElement>("[data-sequence-stage]");
+
+          if (!stage) {
+            delete element.dataset.enhanced;
+            return;
+          }
+
+          const progressBars = gsap.utils.toArray<HTMLElement>(
+            "[data-sequence-progress]",
+            element,
+          );
+
+          gsap.set(progressBars, {
+            scaleX: 0,
+            transformOrigin: "0% 50%",
+            force3D: true,
+          });
+
           const timeline = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
-              trigger: "[data-sequence-stage]",
+              trigger: stage,
               start: "top top",
               end: "+=280%",
               pin: true,
@@ -165,6 +183,21 @@ export function SignatureSequence() {
               { xPercent: -3, duration: 0.7 },
               1.5,
             )
+            .to(
+              progressBars[0],
+              { scaleX: 1, duration: 0.78 },
+              0,
+            )
+            .to(
+              progressBars[1],
+              { scaleX: 1, duration: 0.69, immediateRender: false },
+              0.78,
+            )
+            .to(
+              progressBars[2],
+              { scaleX: 1, duration: 0.91, immediateRender: false },
+              1.47,
+            )
             .to({}, { duration: 0.18 });
 
           return () => {
@@ -230,9 +263,9 @@ export function SignatureSequence() {
           ))}
         </div>
         <div className={styles.progress} aria-hidden="true">
-          <span />
-          <span />
-          <span />
+          {scenes.map((scene) => (
+            <span data-sequence-progress key={scene.sceneKey} />
+          ))}
         </div>
       </div>
     </section>

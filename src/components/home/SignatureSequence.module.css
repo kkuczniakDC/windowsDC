@@ -158,9 +158,12 @@
   }
 
   .progress span {
+    display: block;
     width: 2.5rem;
     height: 1px;
     background: color-mix(in srgb, var(--color-warm-paper) 38%, transparent);
+    transform: scaleX(0);
+    transform-origin: 0% 50%;
   }
 }
 

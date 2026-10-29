@@ -1,11 +1,14 @@
 ---
+description: Animation approval gate and GSAP implementation standards
 alwaysApply: true
 ---
----
-description: GSAP animation implementation and performance standards
-globs: src/**/*.{tsx,ts,jsx,js}
-alwaysApply: false
----
+# Animation Approval
+
+- Do not create, edit, replace, restyle, retune, or remove animations without first describing the intended change and waiting for explicit user approval.
+- This includes GSAP timelines, ScrollTrigger, CSS keyframes, transitions, transforms used for motion, and choreography of existing sequences.
+- Treat current animations as correct unless the user says they are not. Do not "improve" motion while working on unrelated tasks.
+- If a request could affect motion, ask first. Do not implement a motion alternative "just in case."
+
 # GSAP Animation Standards
 
 - Inspect installed GSAP and framework integration versions before using APIs. Do not assume a plugin is installed.

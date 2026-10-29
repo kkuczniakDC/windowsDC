@@ -16,6 +16,7 @@ alwaysApply: true
 - Run relevant lint, typecheck, build, and tests when available. Report checks that could not be run.
 - After changes, summarize files changed, behavior affected, checks performed, and known issues.
 - Ask a concise question when a missing decision materially affects architecture or visual direction; otherwise make a reasonable, reversible choice.
+- Never change animations, GSAP sequences, or motion choreography without prior explicit user approval. Propose first, wait, then implement only the approved change.
 
 ## Planning Before Implementation
 
