@@ -1,0 +1,58 @@
+---
+description: Local Git workflow, commit quality, and repository safety
+alwaysApply: true
+---
+# Git Workflow
+
+## General Rules
+- Git is already initialized. Never run git init unless explicitly requested.
+- Use Git to maintain a clean, traceable history of meaningful project changes.
+- Create local commits at logical, verified milestones without requiring separate approval for each routine commit.
+- NEVER run git push, git push --force, or any other command that publishes commits to a remote. The user handles all remote publishing manually.
+- Do not create pull requests or publish branches. Do not change remote configuration.
+
+## Before Making Changes
+- Run git status --short and inspect the current branch.
+- Inspect relevant recent commits to understand existing message conventions.
+- Review existing staged, unstaged, and untracked changes before editing.
+- Never overwrite, discard, reset, stash, or include pre-existing user changes without authorization.
+- Never assume pre-existing staged changes belong to the current task.
+
+## Before Each Commit
+- Review git diff and git diff --cached.
+- Stage only files that belong to the intended logical change. Do not blindly use git add -A or git add . when unrelated changes may exist.
+- Never commit secrets, credentials, local environment files, temporary artifacts, or unintended large binary files.
+- Do not silently exclude legitimate project assets. Check existing ignore rules and repository conventions.
+- Run relevant checks for the change. For documentation-only changes, at minimum run git diff --check.
+- Do not claim tests or checks passed unless they were actually executed.
+- Do not commit broken or incomplete changes when relevant checks fail. Attempt to resolve issues; otherwise report the blocker and leave the changes uncommitted.
+
+## Commit Message Convention
+- Follow Conventional Commits: type(scope): concise imperative description.
+- Use lowercase types such as feat, fix, docs, style, refactor, perf, test, build, and chore.
+- Examples: docs: document project scope and workflow
+- Examples: feat(home): add cinematic hero section
+- Examples: feat(motion): add scroll-driven media transition
+- Examples: fix(motion): clean up ScrollTrigger on unmount
+- Examples: perf(media): optimize hero video delivery
+- Keep each commit focused on one coherent change.
+- Avoid vague messages such as update, changes, fixes, or work in progress.
+- Add a commit body when it helps explain motivation or important implementation details.
+
+## Commit Timing
+- Commit after a meaningful, verified milestone, not after every tiny edit.
+- Prefer small, logically independent commits over one large commit containing unrelated work.
+- Documentation, project setup, features, bug fixes, and performance improvements should normally have separate commits when they are distinct changes.
+- Before committing, ensure no unrelated user changes will be included.
+- If there is nothing meaningful to commit, do not create an empty commit.
+
+## After Each Commit
+- Verify the commit exists locally using git log or git status.
+- Report the commit hash, message, files or scope included, and checks performed.
+- Report any remaining uncommitted changes clearly.
+- Never imply that a commit was pushed or is available remotely.
+
+## Safety
+- Never use destructive Git commands such as git reset --hard, git clean -fd, or force operations without explicit authorization.
+- Do not amend or rewrite existing commits unless explicitly requested.
+- Do not commit unrelated changes simply to make the working tree clean.
