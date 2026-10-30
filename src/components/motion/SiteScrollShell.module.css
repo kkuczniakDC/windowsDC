@@ -1,0 +1,24 @@
+.smoothWrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+.smoothWrapper[data-enhanced="true"] {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.smoothContent {
+  overflow: visible;
+  min-height: 100%;
+}
+
+.smoothWrapper[data-enhanced="true"] .smoothContent {
+  will-change: transform;
+}
+
+.plainShell {
+  display: contents;
+}

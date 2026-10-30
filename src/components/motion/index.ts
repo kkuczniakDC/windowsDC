@@ -1,4 +1,7 @@
-/**
- * GSAP-powered motion components — implemented in the next phase.
- */
-export {};
+export { SiteScrollShell } from "./SiteScrollShell";
+export { ScrollDriftFigure } from "./ScrollDriftFigure";
+export {
+  homeSectionEffectProps,
+  homeSectionEffects,
+  type HomeSectionEffectKey,
+} from "./home-section-effects";

@@ -7,6 +7,10 @@ html {
   scroll-padding-top: 5rem;
 }
 
+html[data-scroll-smoother="active"] {
+  scroll-behavior: auto;
+}
+
 body {
   display: flex;
   flex-direction: column;

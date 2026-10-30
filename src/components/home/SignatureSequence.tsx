@@ -3,15 +3,17 @@
 import { useRef } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+
+import { registerGsapClientPlugins } from "@/lib/gsap/register-client-plugins";
 
 import lineImage from "../../../assets/de-vontez-cox-obHGJUwzJsA-unsplash.jpg";
 import heightImage from "../../../assets/ben-ashby-0jUEk_11na8-unsplash.jpg";
 import horizonImage from "../../../assets/sunset-window-unsplash.jpg";
 import styles from "./SignatureSequence.module.css";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+registerGsapClientPlugins();
+gsap.registerPlugin(useGSAP);
 
 type Scene = {
   index: string;

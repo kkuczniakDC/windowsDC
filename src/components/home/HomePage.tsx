@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import daylightImage from "../../../assets/ej-li-afZTFY94vv0-unsplash.jpg";
 import reflectionImage from "../../../assets/maxim-scheglov-TMauUlE9PxE-unsplash.jpg";
+import { homeSectionEffectProps } from "@/components/motion/home-section-effects";
+import { ScrollDriftFigure } from "@/components/motion/ScrollDriftFigure";
 import { routes } from "@/lib/brand";
 import { Hero } from "./Hero";
 import { SignatureSequence } from "./SignatureSequence";
@@ -13,7 +15,11 @@ export function HomePage() {
     <main id="main-content">
       <Hero />
 
-      <section className={styles.thesis} aria-labelledby="thesis-title">
+      <section
+        className={styles.thesis}
+        aria-labelledby="thesis-title"
+        {...homeSectionEffectProps("thesis")}
+      >
         <div className={styles.thesisGrid}>
           <div className={styles.thesisHeading}>
             <p className="eyebrow">01 / The opening</p>
@@ -29,15 +35,19 @@ export function HomePage() {
               addition to it.
             </p>
           </div>
-          <figure className={styles.thesisImage}>
+          <ScrollDriftFigure
+            className={styles.thesisImage}
+            travel={6}
+            mobileTravel={3}
+            caption={<figcaption>Atmosphere study · Light finds depth</figcaption>}
+          >
             <Image
               src={daylightImage}
               alt="Late afternoon sunlight casting window-shaped shadows across a quiet interior"
               fill
               sizes="(min-width: 1200px) 66vw, (min-width: 768px) 72vw, 100vw"
             />
-            <figcaption>Atmosphere study · Light finds depth</figcaption>
-          </figure>
+          </ScrollDriftFigure>
           <p className={styles.pullQuote}>
             Less frame.
             <br />
@@ -50,6 +60,7 @@ export function HomePage() {
         className={styles.systems}
         id="systems"
         aria-labelledby="systems-title"
+        {...homeSectionEffectProps("systems")}
       >
         <header className={styles.sectionHeader}>
           <p className="eyebrow">02 / Systems</p>
@@ -96,6 +107,7 @@ export function HomePage() {
       <section
         className={styles.performance}
         aria-labelledby="performance-title"
+        {...homeSectionEffectProps("performance")}
       >
         <header className={styles.performanceIntro}>
           <p className="eyebrow">04 / Performance</p>
@@ -141,6 +153,7 @@ export function HomePage() {
         className={styles.collaboration}
         id="architects"
         aria-labelledby="collaboration-title"
+        {...homeSectionEffectProps("collaboration")}
       >
         <div className={styles.collaborationIntro}>
           <p className="eyebrow">05 / Collaboration</p>
@@ -190,6 +203,7 @@ export function HomePage() {
         className={styles.atmospheres}
         id="atmospheres"
         aria-labelledby="atmospheres-title"
+        {...homeSectionEffectProps("atmospheres")}
       >
         <header className={styles.atmosphereHeader}>
           <p className="eyebrow">06 / Atmosphere studies</p>
@@ -197,18 +211,24 @@ export function HomePage() {
           <p>A visual study of light, reflection and shelter.</p>
         </header>
         <div className={styles.atmosphereGrid}>
-          <figure className={styles.atmospherePrimary}>
+          <ScrollDriftFigure
+            className={styles.atmospherePrimary}
+            travel={4}
+            mobileTravel={2}
+            caption={
+              <figcaption>
+                <span>Study 02</span>
+                Reflection extends the architecture.
+              </figcaption>
+            }
+          >
             <Image
               src={reflectionImage}
               alt="Reflections of trees and warm evening light across a glazed modern façade"
               fill
               sizes="(min-width: 768px) 57vw, 100vw"
             />
-            <figcaption>
-              <span>Study 02</span>
-              Reflection extends the architecture.
-            </figcaption>
-          </figure>
+          </ScrollDriftFigure>
           <div className={styles.atmosphereStatement}>
             <p>Images create a direction, not a claim.</p>
             <p>
@@ -219,7 +239,11 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className={styles.finalCta} aria-labelledby="final-cta-title">
+      <section
+        className={styles.finalCta}
+        aria-labelledby="final-cta-title"
+        {...homeSectionEffectProps("finalCta")}
+      >
         <p className="eyebrow">07 / Begin</p>
         <h2 id="final-cta-title">
           Bring us in before the opening becomes a constraint.

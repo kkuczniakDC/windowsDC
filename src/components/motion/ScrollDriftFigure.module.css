@@ -1,0 +1,19 @@
+.figure {
+  overflow: hidden;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.media :global(img) {
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .media {
+    inset: -10%;
+    will-change: transform;
+  }
+}

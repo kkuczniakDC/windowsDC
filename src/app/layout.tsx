@@ -1,3 +1,4 @@
+import { SiteScrollShell } from "@/components/motion/SiteScrollShell";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { buildRootMetadata } from "@/lib/metadata";
@@ -28,9 +29,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <SiteScrollShell
+          header={<SiteHeader />}
+          footer={<SiteFooter />}
+        >
+          {children}
+        </SiteScrollShell>
       </body>
     </html>
   );

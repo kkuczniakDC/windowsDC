@@ -56,6 +56,7 @@
 .thesisImage figcaption,
 .atmospherePrimary figcaption {
   position: absolute;
+  z-index: 1;
   right: 1.25rem;
   bottom: 1.25rem;
   color: var(--color-warm-paper);

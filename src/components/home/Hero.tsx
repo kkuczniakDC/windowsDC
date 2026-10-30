@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import desktopHero from "../../../assets/sliding-door-dark-unsplash.jpg";
 import mobileHero from "../../../assets/yael-yanez-Uuz7lCQWpyo-unsplash.jpg";
+import { homeSectionEffectProps } from "@/components/motion/home-section-effects";
 import { routes } from "@/lib/brand";
 import styles from "./Hero.module.css";
 
@@ -31,7 +32,11 @@ export function Hero() {
   });
 
   return (
-    <section className={styles.hero} aria-labelledby="hero-title">
+    <section
+      className={styles.hero}
+      aria-labelledby="hero-title"
+      {...homeSectionEffectProps("hero")}
+    >
       <div className={styles.copy}>
         <p className="eyebrow">Architectural windows · doors · glazing</p>
         <h1 id="hero-title">
