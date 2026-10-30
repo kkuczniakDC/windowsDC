@@ -1,4 +1,10 @@
-/**
- * Content loading and normalization — filled in during content integration.
- */
-export {};
+export {
+  categoryIds,
+  getAllCategories,
+  getCategory,
+  getRelatedCategories,
+  type CategoryContent,
+  type CategoryDetail,
+  type CategoryFamily,
+  type CategoryId,
+} from "./categories";

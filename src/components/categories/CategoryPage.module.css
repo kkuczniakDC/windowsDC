@@ -1,0 +1,797 @@
+.main {
+  min-height: 100vh;
+}
+
+.hero {
+  display: grid;
+  min-height: 100svh;
+  padding: clamp(10rem, 18vh, 13rem) var(--page-gutter) clamp(4rem, 8vw, 7rem);
+  background: var(--color-ink);
+  color: var(--color-warm-paper);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.heroCopy {
+  display: flex;
+  min-width: 0;
+  grid-column: 1 / span 6;
+  flex-direction: column;
+}
+
+.heroCopy h1 {
+  max-width: 11ch;
+  margin-top: clamp(1.5rem, 4vh, 3rem);
+  font-size: clamp(4.2rem, 7.4vw, 7.6rem);
+}
+
+.lede {
+  max-width: 28rem;
+  margin-top: auto;
+  padding-top: var(--space-10);
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.heroMedia {
+  min-width: 0;
+  grid-column: 8 / -1;
+  align-self: center;
+}
+
+.thesis,
+.families,
+.details,
+.inspiration,
+.cta,
+.related {
+  padding-inline: var(--page-gutter);
+}
+
+.thesis,
+.families,
+.inspiration {
+  padding-block: clamp(7rem, 12vw, 12rem);
+}
+
+.details {
+  padding-block: clamp(7rem, 12vw, 12rem);
+  background: var(--color-mineral-plaster);
+}
+
+.cta {
+  display: grid;
+  padding-block: clamp(7rem, 12vw, 12rem);
+  background: var(--color-mineral-plaster);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.related {
+  padding-block: clamp(7rem, 12vw, 12rem);
+  background: var(--color-ink);
+  color: var(--color-warm-paper);
+}
+
+.sectionHeader,
+.thesis,
+.familyList,
+.detailList,
+.note,
+.inspirationFigure,
+.inspirationPlaceholder {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+}
+
+.sectionHeader {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.sectionHeader > :first-child {
+  grid-column: 1 / span 3;
+}
+
+.sectionHeader h2 {
+  max-width: 12ch;
+  grid-column: 4 / span 6;
+  font-size: clamp(3.5rem, 6vw, 6.4rem);
+}
+
+.sectionHeader > :last-child {
+  max-width: 28rem;
+  align-self: end;
+  grid-column: 10 / -1;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.thesis {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.thesis > :first-child {
+  grid-column: 1 / span 3;
+}
+
+.thesis h2 {
+  max-width: 11ch;
+  grid-column: 4 / span 6;
+  font-size: clamp(3.7rem, 6.5vw, 7rem);
+}
+
+.thesisBody {
+  display: flex;
+  max-width: 32rem;
+  grid-column: 4 / span 6;
+  margin-top: var(--space-10);
+  flex-direction: column;
+  gap: var(--space-6);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.familyList {
+  margin-top: clamp(4rem, 8vw, 8rem);
+}
+
+.family {
+  display: grid;
+  align-items: center;
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 28%, transparent);
+  gap: 1.5rem;
+}
+
+.familyList > .family:first-child {
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 35%, transparent);
+}
+
+.familyIndex {
+  color: var(--color-weathered-bronze);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+}
+
+.familyCopy h3 {
+  max-width: 16ch;
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+}
+
+.familyCopy p {
+  max-width: 36rem;
+  margin-top: var(--space-4);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.familyMeta {
+  color: var(--color-weathered-bronze);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.familyMedia {
+  min-width: 0;
+}
+
+.detailList {
+  display: grid;
+  margin-top: clamp(4rem, 8vw, 8rem);
+  padding: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+}
+
+.detailList li {
+  display: grid;
+  min-height: 16rem;
+  padding: var(--space-8) var(--space-8) var(--space-8) 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 28%, transparent);
+  gap: var(--space-4);
+}
+
+.detailList li:nth-child(even) {
+  padding-left: var(--space-8);
+  border-left: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+}
+
+.detailList span {
+  color: var(--color-oxide);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+}
+
+.detailList h3 {
+  max-width: 12ch;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+}
+
+.detailList p {
+  max-width: 32rem;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.note {
+  display: grid;
+  width: min(100%, var(--page-max));
+  margin: clamp(3rem, 6vw, 5rem) auto 0;
+  padding: var(--space-8);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+  grid-template-columns: 10rem 1fr;
+  gap: var(--space-8);
+}
+
+.note span {
+  color: var(--color-weathered-bronze);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.note p {
+  max-width: 42rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.inspirationFigure {
+  position: relative;
+  min-height: clamp(32rem, 52vw, 52rem);
+  margin-top: clamp(4rem, 8vw, 8rem);
+}
+
+.inspirationFigure figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  color: var(--color-warm-paper);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+
+.inspirationPlaceholder {
+  width: min(22rem, 100%);
+  margin-top: clamp(4rem, 8vw, 8rem);
+}
+
+.cta > :first-child {
+  grid-column: 1 / span 3;
+}
+
+.cta h2 {
+  max-width: 13ch;
+  grid-column: 4 / span 5;
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+}
+
+.ctaActions {
+  display: flex;
+  max-width: 28rem;
+  grid-column: 10 / -1;
+  align-self: end;
+  flex-direction: column;
+  gap: var(--space-8);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.relatedHeader {
+  display: grid;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.relatedHeader > :first-child {
+  grid-column: 1 / span 3;
+}
+
+.relatedHeader h2 {
+  max-width: 12ch;
+  grid-column: 4 / span 6;
+  font-size: clamp(3.4rem, 6vw, 6rem);
+}
+
+.relatedHeader :global(.text-link) {
+  align-self: end;
+  grid-column: 10 / -1;
+}
+
+.relatedList {
+  width: min(100%, var(--page-max));
+  padding: 0;
+  margin: clamp(4rem, 8vw, 8rem) auto 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-warm-paper) 28%, transparent);
+  list-style: none;
+}
+
+.relatedList li {
+  padding: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warm-paper) 22%, transparent);
+}
+
+.relatedList a {
+  display: grid;
+  min-height: 8.5rem;
+  align-items: center;
+  padding-block: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+  grid-template-columns: 1fr 4fr 5fr 1fr;
+  gap: 1.5rem;
+  transition:
+    padding-inline 240ms var(--ease-out),
+    color 240ms var(--ease-out),
+    background-color 240ms var(--ease-out);
+}
+
+.relatedList a:hover {
+  padding-inline: 1.25rem;
+  background: var(--color-warm-paper);
+  color: var(--color-ink);
+}
+
+.relatedList a > span:first-child {
+  color: var(--color-glass-grey);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+}
+
+.relatedList a:hover > span:first-child {
+  color: var(--color-weathered-bronze);
+}
+
+.relatedList h3 {
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+}
+
+.relatedList p {
+  max-width: 28rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.relatedList a > span:last-child {
+  justify-self: end;
+  font-size: 1.1rem;
+}
+
+/* Windows: nested aperture, compact family index with a small frame. */
+[data-category="windows"] .heroMedia {
+  max-width: 26rem;
+  justify-self: end;
+}
+
+[data-category="windows"] .family {
+  grid-template-columns: 4rem minmax(0, 1fr) 7.5rem;
+}
+
+[data-category="windows"] .familyMedia {
+  width: 7.5rem;
+  justify-self: end;
+}
+
+/* Sliding: wide hero panorama, alternating full-width bands. */
+[data-category="sliding-doors"] .hero {
+  align-content: space-between;
+}
+
+[data-category="sliding-doors"] .heroCopy {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+[data-category="sliding-doors"] .heroCopy > :first-child {
+  grid-column: 1 / span 3;
+}
+
+[data-category="sliding-doors"] .heroCopy h1 {
+  grid-column: 4 / span 6;
+  margin-top: 0;
+}
+
+[data-category="sliding-doors"] .lede {
+  grid-column: 10 / -1;
+  align-self: end;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+[data-category="sliding-doors"] .heroMedia {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  margin-top: clamp(2.5rem, 5vw, 5rem);
+}
+
+[data-category="sliding-doors"] .family {
+  align-items: stretch;
+  padding-block: clamp(3.5rem, 7vw, 7rem);
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.15fr);
+}
+
+[data-category="sliding-doors"] .familyMedia {
+  overflow: hidden;
+}
+
+[data-category="sliding-doors"] .family:nth-child(even) {
+  grid-template-columns: minmax(0, 1.15fr) 4rem minmax(0, 1fr);
+}
+
+[data-category="sliding-doors"] .family:nth-child(even) .familyMedia {
+  order: -1;
+}
+
+[data-category="sliding-doors"] .family:nth-child(even) .familyIndex {
+  order: 0;
+}
+
+[data-category="sliding-doors"] .familyCopy h3 {
+  max-width: 14ch;
+}
+
+/* Entrance: tall door leaf, chapters of one specification. */
+[data-category="entrance-doors"] .heroCopy {
+  grid-column: 1 / span 7;
+  justify-content: center;
+}
+
+[data-category="entrance-doors"] .heroCopy h1 {
+  max-width: 12ch;
+}
+
+[data-category="entrance-doors"] .heroMedia {
+  max-width: 18rem;
+  grid-column: 9 / -1;
+  justify-self: end;
+  align-self: stretch;
+}
+
+[data-category="entrance-doors"] .heroMedia :global(figure) {
+  height: 100%;
+  min-height: 32rem;
+  aspect-ratio: auto;
+}
+
+[data-category="entrance-doors"] .family {
+  grid-template-columns: 4rem minmax(0, 1fr);
+  padding-block: clamp(2rem, 4vw, 3.25rem);
+}
+
+[data-category="entrance-doors"] .familyCopy h3 {
+  font-size: clamp(1.85rem, 2.8vw, 2.8rem);
+}
+
+[data-category="entrance-doors"] .details {
+  background: var(--color-mineral-plaster);
+}
+
+[data-category="entrance-doors"] .inspirationPlaceholder {
+  width: min(20rem, 70%);
+}
+
+/* Glazing: large type, more air, stacked propositions. */
+[data-category="architectural-glazing"] .heroCopy {
+  grid-column: 1 / span 8;
+}
+
+[data-category="architectural-glazing"] .heroCopy h1 {
+  max-width: 10ch;
+  font-size: clamp(4.8rem, 8.4vw, 8.8rem);
+}
+
+[data-category="architectural-glazing"] .heroMedia {
+  grid-column: 9 / -1;
+  align-self: end;
+}
+
+[data-category="architectural-glazing"] .thesis h2 {
+  max-width: 14ch;
+}
+
+[data-category="architectural-glazing"] .family {
+  align-items: start;
+  padding-block: clamp(4rem, 8vw, 8.5rem);
+  grid-template-columns: 4rem minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+[data-category="architectural-glazing"] .familyCopy h3 {
+  max-width: 12ch;
+  font-size: clamp(2.6rem, 4.6vw, 4.8rem);
+}
+
+[data-category="architectural-glazing"] .family:not(:has(.familyMedia)) {
+  grid-template-columns: 4rem minmax(0, 1fr);
+}
+
+@media (max-width: 68.74rem) {
+  .hero,
+  .thesis,
+  .sectionHeader,
+  .cta,
+  .relatedHeader {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .heroCopy,
+  [data-category="sliding-doors"] .heroCopy,
+  [data-category="entrance-doors"] .heroCopy,
+  [data-category="architectural-glazing"] .heroCopy {
+    grid-column: 1 / span 5;
+  }
+
+  [data-category="sliding-doors"] .heroCopy {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .heroMedia,
+  [data-category="sliding-doors"] .heroMedia,
+  [data-category="entrance-doors"] .heroMedia,
+  [data-category="architectural-glazing"] .heroMedia {
+    grid-column: 6 / -1;
+  }
+
+  [data-category="sliding-doors"] .heroCopy > :first-child {
+    grid-column: 1 / span 2;
+  }
+
+  [data-category="sliding-doors"] .heroCopy h1 {
+    grid-column: 3 / span 4;
+  }
+
+  [data-category="sliding-doors"] .lede {
+    grid-column: 5 / -1;
+  }
+
+  [data-category="sliding-doors"] .heroMedia {
+    grid-column: 1 / -1;
+  }
+
+  .sectionHeader > :first-child,
+  .thesis > :first-child,
+  .cta > :first-child,
+  .relatedHeader > :first-child {
+    grid-column: 1 / span 3;
+  }
+
+  .sectionHeader h2,
+  .thesis h2,
+  .cta h2,
+  .relatedHeader h2 {
+    grid-column: 3 / span 5;
+  }
+
+  .sectionHeader > :last-child,
+  .ctaActions,
+  .relatedHeader :global(.text-link) {
+    margin-top: var(--space-8);
+    grid-column: 4 / -1;
+  }
+
+  .thesisBody {
+    grid-column: 3 / -1;
+  }
+
+  [data-category="windows"] .family,
+  [data-category="entrance-doors"] .family {
+    grid-template-columns: 3rem minmax(0, 1fr) 6.5rem;
+  }
+
+  [data-category="entrance-doors"] .family {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  [data-category="sliding-doors"] .family,
+  [data-category="sliding-doors"] .family:nth-child(even),
+  [data-category="architectural-glazing"] .family {
+    grid-template-columns: 3rem 1fr;
+  }
+
+  [data-category="sliding-doors"] .familyMedia,
+  [data-category="sliding-doors"] .family:nth-child(even) .familyMedia,
+  [data-category="architectural-glazing"] .familyMedia {
+    order: -1;
+    grid-column: 1 / -1;
+  }
+
+  [data-category="windows"] .familyMedia {
+    width: 6.5rem;
+  }
+
+  .detailList {
+    grid-template-columns: 1fr;
+  }
+
+  .detailList li:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .relatedList a {
+    grid-template-columns: 0.7fr 3fr 3fr 0.5fr;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .hero {
+    min-height: 100svh;
+    padding-bottom: var(--space-12);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .heroCopy,
+  .heroMedia,
+  [data-category="windows"] .heroMedia,
+  [data-category="sliding-doors"] .heroCopy,
+  [data-category="sliding-doors"] .heroMedia,
+  [data-category="entrance-doors"] .heroCopy,
+  [data-category="entrance-doors"] .heroMedia,
+  [data-category="architectural-glazing"] .heroCopy,
+  [data-category="architectural-glazing"] .heroMedia {
+    grid-column: 1 / -1;
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  [data-category="sliding-doors"] .heroCopy {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  [data-category="sliding-doors"] .heroCopy > :first-child,
+  [data-category="sliding-doors"] .heroCopy h1,
+  [data-category="sliding-doors"] .lede {
+    grid-column: 1 / -1;
+  }
+
+  [data-category="entrance-doors"] .heroMedia {
+    order: -1;
+    max-width: 14rem;
+    justify-self: start;
+  }
+
+  [data-category="entrance-doors"] .heroMedia :global(figure) {
+    min-height: 22rem;
+  }
+
+  .heroCopy h1,
+  [data-category="architectural-glazing"] .heroCopy h1 {
+    font-size: clamp(3.4rem, 15vw, 5.4rem);
+  }
+
+  .lede {
+    margin-top: var(--space-8);
+    padding-top: 0;
+  }
+
+  .heroMedia {
+    margin-top: var(--space-10);
+  }
+
+  .thesis,
+  .sectionHeader,
+  .cta,
+  .relatedHeader {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .thesis > :first-child,
+  .thesis h2,
+  .thesisBody,
+  .sectionHeader > :first-child,
+  .sectionHeader h2,
+  .sectionHeader > :last-child,
+  .cta > :first-child,
+  .cta h2,
+  .ctaActions,
+  .relatedHeader > :first-child,
+  .relatedHeader h2,
+  .relatedHeader :global(.text-link) {
+    grid-column: 1 / -1;
+  }
+
+  .thesis h2,
+  .sectionHeader h2,
+  .cta h2,
+  .relatedHeader h2 {
+    margin-top: var(--space-8);
+    font-size: clamp(3.1rem, 14vw, 5.1rem);
+  }
+
+  .thesisBody,
+  .sectionHeader > :last-child,
+  .ctaActions,
+  .relatedHeader :global(.text-link) {
+    margin-top: var(--space-6);
+  }
+
+  .familyList {
+    margin-top: var(--space-16);
+  }
+
+  [data-category="windows"] .family,
+  [data-category="entrance-doors"] .family,
+  [data-category="sliding-doors"] .family,
+  [data-category="sliding-doors"] .family:nth-child(even),
+  [data-category="architectural-glazing"] .family,
+  [data-category="architectural-glazing"] .family:not(:has(.familyMedia)) {
+    min-height: auto;
+    padding-block: var(--space-8);
+    grid-template-columns: 2.5rem 1fr;
+  }
+
+  [data-category="windows"] .familyMedia,
+  [data-category="sliding-doors"] .familyMedia,
+  [data-category="architectural-glazing"] .familyMedia {
+    width: 100%;
+    margin-top: var(--space-6);
+    grid-column: 1 / -1;
+  }
+
+  [data-category="architectural-glazing"] .familyCopy h3 {
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
+  }
+
+  .detailList li {
+    min-height: 0;
+    padding: var(--space-8) 0;
+  }
+
+  .note {
+    padding: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  .inspirationFigure {
+    min-height: 70svh;
+  }
+
+  .cta :global(.button) {
+    width: 100%;
+  }
+
+  .relatedList a {
+    min-height: 13rem;
+    padding-block: var(--space-8);
+    grid-template-columns: 2.5rem 1fr 1.5rem;
+  }
+
+  .relatedList p {
+    margin-top: var(--space-3);
+    grid-column: 2 / -1;
+  }
+
+  .relatedList a:hover {
+    padding-inline: 0;
+    background: transparent;
+    color: inherit;
+  }
+}
+
+@media (hover: none) {
+  .relatedList a:hover {
+    padding-inline: 0;
+    background: transparent;
+    color: inherit;
+  }
+}

@@ -18,4 +18,8 @@ export const routes = {
   home: "/",
   consultation: "/consultation",
   privacy: "/privacy",
+  windows: "/windows",
+  slidingDoors: "/sliding-doors",
+  entranceDoors: "/entrance-doors",
+  architecturalGlazing: "/architectural-glazing",
 } as const;

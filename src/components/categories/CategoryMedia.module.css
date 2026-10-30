@@ -1,0 +1,100 @@
+.figure {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.frame {
+  aspect-ratio: 4 / 5;
+}
+
+.panorama {
+  aspect-ratio: 16 / 7;
+}
+
+.door {
+  aspect-ratio: 3 / 5;
+}
+
+.glass {
+  aspect-ratio: 5 / 4;
+}
+
+.photo,
+.placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.photo :global(img) {
+  object-fit: cover;
+}
+
+.placeholder {
+  display: grid;
+  place-items: center;
+}
+
+.ink {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-warm-paper) 7%, transparent),
+      transparent 42%
+    ),
+    #26322e;
+  color: color-mix(in srgb, var(--color-warm-paper) 58%, transparent);
+}
+
+.paper {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--color-warm-paper) 55%, transparent),
+      transparent 48%
+    ),
+    var(--color-mineral-plaster);
+  color: color-mix(in srgb, var(--color-ink) 40%, transparent);
+}
+
+.diagram {
+  width: 72%;
+  height: 78%;
+}
+
+.caption {
+  position: absolute;
+  z-index: 1;
+  right: 1.15rem;
+  bottom: 1.15rem;
+  color: var(--color-warm-paper);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+
+.paper ~ .caption,
+.figure:has(.paper) .caption {
+  color: var(--color-weathered-bronze);
+  text-shadow: none;
+}
+
+.nested {
+  border: 1px solid color-mix(in srgb, var(--color-warm-paper) 28%, transparent);
+}
+
+.nested .photo,
+.nested .placeholder {
+  inset: 9%;
+}
+
+@media (max-width: 47.99rem) {
+  .caption {
+    right: 0.85rem;
+    bottom: 0.85rem;
+    font-size: 0.62rem;
+  }
+}

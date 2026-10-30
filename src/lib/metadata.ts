@@ -14,9 +14,12 @@ export function buildRootMetadata(): Metadata {
   };
 }
 
-export function buildPageMetadata(title: string): Metadata {
+export function buildPageMetadata(
+  title: string,
+  description?: string,
+): Metadata {
   return {
     title,
-    description: brandConfig.description,
+    description: description ?? brandConfig.description,
   };
 }

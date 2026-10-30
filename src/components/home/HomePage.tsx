@@ -72,28 +72,36 @@ export function HomePage() {
         </header>
         <ol className={styles.systemList}>
           <li>
-            <span>01</span>
-            <h3>Windows</h3>
-            <p>Disciplined sightlines for measured daylight and ventilation.</p>
-            <span aria-hidden="true">↗</span>
+            <Link href={routes.windows}>
+              <span>01</span>
+              <h3>Windows</h3>
+              <p>Disciplined sightlines for measured daylight and ventilation.</p>
+              <span aria-hidden="true">↗</span>
+            </Link>
           </li>
           <li>
-            <span>02</span>
-            <h3>Sliding doors</h3>
-            <p>Large spans that move with ease and preserve visual continuity.</p>
-            <span aria-hidden="true">↗</span>
+            <Link href={routes.slidingDoors}>
+              <span>02</span>
+              <h3>Sliding doors</h3>
+              <p>Large spans that move with ease and preserve visual continuity.</p>
+              <span aria-hidden="true">↗</span>
+            </Link>
           </li>
           <li>
-            <span>03</span>
-            <h3>Entrance doors</h3>
-            <p>A precise first contact: proportion, tactility and security.</p>
-            <span aria-hidden="true">↗</span>
+            <Link href={routes.entranceDoors}>
+              <span>03</span>
+              <h3>Entrance doors</h3>
+              <p>A precise first contact: proportion, tactility and security.</p>
+              <span aria-hidden="true">↗</span>
+            </Link>
           </li>
           <li>
-            <span>04</span>
-            <h3>Architectural glazing</h3>
-            <p>Glazed walls resolved as an integral part of the building.</p>
-            <span aria-hidden="true">↗</span>
+            <Link href={routes.architecturalGlazing}>
+              <span>04</span>
+              <h3>Architectural glazing</h3>
+              <p>Glazed walls resolved as an integral part of the building.</p>
+              <span aria-hidden="true">↗</span>
+            </Link>
           </li>
         </ol>
         <p className={styles.systemNote}>
