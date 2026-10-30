@@ -10,7 +10,10 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | --- | --- | --- |
 | D-TECH-01 | Next.js App Router, React 19, TypeScript strict | `package.json`, `src/app/` |
 | D-TECH-02 | npm as package manager; scripts for dev/build/lint/typecheck | `package.json` |
-| D-TECH-03 | GSAP + ScrollTrigger for homepage signature sequence only | `SignatureSequence.tsx` |
+| D-TECH-03 | GSAP + ScrollTrigger for homepage signature sequence; ScrollSmoother homepage-only; category pages use `CategoryMotion` without pins | `SignatureSequence.tsx`, `SiteScrollShell.tsx`, `CategoryMotion.tsx` |
+| D-IA-01 | Category URLs are `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing` | `brand.ts`, App Router pages |
+| D-CONTENT-02 | Descriptive family names only; no manufacturer brands as product names | `src/lib/content/categories.ts` |
+| D-CONTENT-03 | No invented specs (U-values, sizes, security, acoustics, guarantees) on category pages | `docs/PRODUCT_CATEGORIES.md` |
 | D-TECH-04 | Consultation via Server Action + Zod + Resend HTTP API | `actions.ts`, `lib/email/` |
 | D-TECH-05 | Source photography lives in `assets/`; imported where used | Component imports |
 | D-TECH-06 | Working brand name “Southern Windows” flagged temporary | `brand.ts` |
@@ -42,7 +45,7 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | O-TECH-02 | Analytics and cookie consent? | Privacy copy, implementation |
 | O-TECH-03 | CRM integration for consultation leads? | Etap 4 vs. manual inbox |
 | O-CONTENT-01 | When to use the 4 unused videos on homepage or elsewhere? | Performance budget, hero design |
-| O-IA-01 | URL plan for product/system pages? | Etap 2 |
+| O-IA-01 | URL plan for remaining pages (About, For architects, product details)? Category URLs decided in D-IA-01. | Rest of Etap 2 / Etap 3 |
 | O-CMS-01 | Headless CMS vs. custom admin vs. files? | Etap 3 |
 
 ---

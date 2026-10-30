@@ -43,7 +43,7 @@ Quality bar (target, not all verified in QA):
 | Project consultation (`/consultation`) | Form UI + Server Action, Zod validation, Resend email (env-dependent) |
 | Privacy notice (`/privacy`) | Pre-launch draft copy |
 | Product catalog, CMS, admin | Not started |
-| Dedicated Products / About routes | Not started (homepage sections only) |
+| Dedicated Products / About routes | Four category presentation pages implemented; About and product details not started |
 
 ## Success criteria
 

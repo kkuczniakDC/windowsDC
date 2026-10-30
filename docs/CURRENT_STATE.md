@@ -1,6 +1,6 @@
 # Current state (implementation audit)
 
-*Audit date: 2026-10-29. Based on repository inspection, not full manual QA in all browsers.*
+*Audit date: 2026-10-30 (category pages). Previous baseline 2026-10-29. Based on repository inspection plus HTTP checks of `/`, `/windows`, `/sliding-doors`, `/entrance-doors`, and `/architectural-glazing`. Visual screenshot pass in the agent browser was not available on this run.*
 
 ## Stack
 
@@ -11,7 +11,7 @@
 | Styling | CSS modules + global tokens (`src/styles/tokens.css`) |
 | Bundler / dev | Turbopack (`next dev --turbopack`) |
 | Package manager | **npm** (scripts in `package.json`; no lockfile audit in this doc) |
-| Motion | GSAP **3.15.0**, `@gsap/react` **2.1.2**, ScrollTrigger (homepage sequence only) |
+| Motion | GSAP **3.15.0**, `@gsap/react` **2.1.2**, ScrollTrigger + ScrollSmoother (homepage), `CategoryMotion` on category pages |
 | Forms / mail | Zod **4.x**, Resend HTTP API via custom provider (no Resend SDK) |
 
 Next config enables `cacheComponents` and `partialPrefetching`.
@@ -22,9 +22,10 @@ Next config enables `cacheComponents` and `partialPrefetching`.
 src/app/              App Router pages and Server Actions
 src/components/
   home/               Homepage sections (Hero, HomePage, SignatureSequence)
+  categories/         Shared category page, media slots, page GSAP
   site/               Header, footer, consultation form
-  motion/             Placeholder barrel (no exports yet)
-src/lib/              brand, metadata, consultation, email, env, content stubs
+  motion/             SiteScrollShell, ScrollDriftFigure, homepage section speeds
+src/lib/              brand, metadata, consultation, email, env, category content
 src/styles/           reset, tokens, global
 src/content/          Placeholder (.gitkeep)
 assets/               Read-only source media (imported into Next where used)
@@ -37,13 +38,17 @@ public/               Empty except .gitkeep (no static media served from here ye
 | Route | Rendering | Purpose |
 | --- | --- | --- |
 | `/` | Static | Homepage |
+| `/windows` | Static | Windows category presentation |
+| `/sliding-doors` | Static | Sliding doors category presentation |
+| `/entrance-doors` | Static | Entrance doors category presentation |
+| `/architectural-glazing` | Static | Architectural glazing category presentation |
 | `/consultation` | Static shell; form posts Server Action | Lead capture |
 | `/privacy` | Static | Draft privacy notice |
 | `/_not-found` | Default | 404 |
 
-No `/products`, `/about`, or separate `/contact` route—consultation serves contact intent.
+No `/about`, product-detail, or separate `/contact` route—consultation still serves contact intent. Category IA is documented in `docs/PRODUCT_CATEGORIES.md`.
 
-Central route constants: `src/lib/brand.ts` (`routes.home`, `consultation`, `privacy`).
+Central route constants: `src/lib/brand.ts` (`routes.home`, `windows`, `slidingDoors`, `entranceDoors`, `architecturalGlazing`, `consultation`, `privacy`).
 
 ## Homepage composition
 
@@ -53,7 +58,7 @@ Implemented in `src/components/home/HomePage.tsx` (server component) with client
 | --- | --- | --- | --- |
 | — | Hero | — | Responsive `<picture>`, desktop vs mobile hero images |
 | 01 | The opening (thesis) | — | Copy + large daylight image |
-| 02 | Systems | `#systems` | Four system lines (not linked to product pages) |
+| 02 | Systems | `#systems` | Four system lines linked to category routes |
 | 03 | Three movements | `#approach` | `SignatureSequence` — GSAP ScrollTrigger pin/scrub |
 | 04 | Performance | — | Four pillars + technical disclaimer |
 | 05 | Collaboration | `#architects` | Process list + link to consultation |
@@ -64,21 +69,21 @@ Header/footer link to anchors and `/consultation`.
 
 ## GSAP integration
 
-**Location:** `src/components/home/SignatureSequence.tsx` only.
+Plugins register once in `src/lib/gsap/register-client-plugins.ts` (`ScrollTrigger`, `ScrollSmoother`).
 
-**Pattern:**
+**Homepage**
 
-- `"use client"` + `useGSAP({ scope: root })`.
-- `gsap.registerPlugin(useGSAP, ScrollTrigger)` at module level.
-- `gsap.matchMedia()` for `(min-width: 1100px) and (min-height: 700px) and (pointer: fine) and (prefers-reduced-motion: no-preference)`.
-- On match: sets `data-enhanced="true"` on section root; pinned stage with scrub timeline (~280% scroll distance); progress bars; scene transitions via opacity, clip-path, and media transforms.
-- Cleanup: matchMedia `revert()` on unmount; callback removes `data-enhanced` when context tears down.
+- `SiteScrollShell` — ScrollSmoother only when `pathname === "/"` and `scrollSmootherMedia` matches.
+- `SignatureSequence` — `"use client"` + `useGSAP({ scope: root })`; pinned scrub timeline on the same desktop / fine-pointer / no-reduced-motion query; stacked CSS fallback otherwise.
+- `ScrollDriftFigure` — modest scrubbed `yPercent` on thesis and atmosphere images.
 
-**CSS pairing:** `SignatureSequence.module.css` mirrors the same media query for stacked vs. pinned layout.
+**Category pages**
 
-**Not verified in this audit:** runtime behavior in browser (ScrollTrigger refresh on resize, Strict Mode double-mount, touch devices). Code structure follows `@gsap/react` scoping and documents reduced-motion bypass.
+- `CategoryMotion` — `useGSAP` + `gsap.matchMedia("(prefers-reduced-motion: no-preference)")`; hero entrance and family reveals; no pins, no ScrollSmoother, no `data-speed`. Cleanup via `matchMedia.revert()`.
 
-**Placeholder:** `src/components/motion/index.ts` is empty—no shared motion utilities yet.
+**Not verified in this pass:** live screenshot QA of motion (agent browser unavailable). HTTP checks confirmed the four category routes and homepage system links. Code structure follows `@gsap/react` scoping and reduced-motion bypass.
+
+`src/components/motion/index.ts` exports `SiteScrollShell`, `ScrollDriftFigure`, and `homeSectionEffectProps`.
 
 ## Styles, fonts, responsiveness
 
@@ -89,7 +94,7 @@ Header/footer link to anchors and `/consultation`.
 
 ## Assets
 
-### Used in application (7 JPEGs)
+### Used in application (10 JPEGs)
 
 Imported from `assets/` through `next/image` or `getImageProps`:
 
@@ -102,12 +107,15 @@ Imported from `assets/` through `next/image` or `getImageProps`:
 | `de-vontez-cox-obHGJUwzJsA-unsplash.jpg` | Signature sequence — Line |
 | `ben-ashby-0jUEk_11na8-unsplash.jpg` | Signature sequence — Height |
 | `sunset-window-unsplash.jpg` | Signature sequence — Horizon |
+| `bundo-kim-MmagnTelMyo-unsplash.jpg` | Windows category inspiration |
+| `zhisheng-deng-W8FPl06Q4F4-unsplash.jpg` | Sliding doors category inspiration |
+| `naomi-august-a14NxeTfMXE-unsplash.jpg` | Architectural glazing inspiration |
 
-Next.js optimizes these at build/dev time (WebP variants observed in `.next/cache`).
+Product-family slots use designed CSS/SVG placeholders (`CategoryMedia`). Entrance inspiration uses the same constructed figure. Next.js optimizes imported JPEGs at build/dev time.
 
 ### Present but unused in code
 
-- **19 additional JPEGs** in `assets/` (including several multi-MB sources, e.g. ~13 MB `heng-chiu-O0-nO2ipXAg-unsplash.jpg`).
+- **16 additional JPEGs** in `assets/` (including several multi-MB sources, e.g. ~13 MB `heng-chiu-O0-nO2ipXAg-unsplash.jpg`).
 - **4 MP4 videos** (5–33 MB each); **not referenced** in `src/`—available for future hero or ambient sections.
 
 See `docs/ASSET_GUIDELINES.md` for size inventory and delivery recommendations.
@@ -127,21 +135,20 @@ Production gaps documented in `README.md` (shared rate limiter, legal finalizati
 | --- | --- | --- |
 | `typecheck` | `tsc --noEmit` | Pass |
 | `lint` | `eslint .` | Pass |
-| `build` | `next build` | Pass; static routes for `/`, `/consultation`, `/privacy` |
+| `build` | `next build` | Pass (2026-10-30); static routes for `/`, `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing`, `/consultation`, `/privacy` |
 | Tests | — | **No test runner configured** |
 
 ## Git history (snapshot)
 
 - Branch: `main`
-- Latest commit: `2c4dbd2` — establishes Warm Editorial site with homepage and consultation flow.
-- **Uncommitted work at audit time:** local edits to `SignatureSequence` (tsx/css) and Cursor rules (`gsap-animation`, `project-standard`); untracked `git-workflow.mdc`. Treat as in-progress user/agent work, not part of baseline commit unless separately merged.
+- Latest commit at previous audit: `2c4dbd2`. Subsequent local history includes motion work (`7b984a5`) and this category-page milestone.
 
 ## Known limitations and technical debt
 
 1. **Consultation rate limiting** is in-process only—not safe for multi-instance serverless without replacement.
 2. **Brand/contact** placeholders (`contact.email` / `phone` null in `brand.ts`).
-3. **Content layer** stubs (`src/lib/content`, `src/content`)—copy lives inline in components.
-4. **Systems list items** show ↗ affordance but have no destinations (future product routes).
+3. **Content layer** — category copy is typed in `src/lib/content/categories.ts`; homepage copy remains inline in TSX. `src/content/` is still empty. No CMS or admin.
+4. **Product detail routes** do not exist yet. Family blocks are in-page articles; `detailHref` is reserved and unset.
 5. **Videos and most photos** unused—risk of accidental commit bloat if served without optimization strategy.
 6. **Motion verification** not run in browser during this documentation pass.
 7. **visual-design.mdc** frontmatter appears duplicated/conflicting (`alwaysApply` true and false)—see architecture/decisions docs; rule behavior in Cursor may be ambiguous until cleaned up (recommendation only; not changed in this pass).

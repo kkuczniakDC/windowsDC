@@ -1,15 +1,16 @@
 # Southern Windows (working name)
 
-Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, plus project consultation and a draft privacy notice.
+Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, four product category pages, project consultation, and a draft privacy notice.
 
 ## Status
 
 | Area | State |
 | --- | --- |
 | Homepage (`/`) | Implemented; launch QA and motion verification still open |
+| Category pages | Implemented: `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing` — see [`docs/PRODUCT_CATEGORIES.md`](docs/PRODUCT_CATEGORIES.md) |
 | Consultation (`/consultation`) | Implemented; needs production mail, rate limits, legal sign-off |
 | Privacy (`/privacy`) | Pre-launch draft |
-| Product catalog / admin | Not started — see roadmap |
+| Product catalogue / admin | Not started — see roadmap |
 
 Full audit: [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md).
 
@@ -55,8 +56,8 @@ If any are missing at **submit** time, the form returns an error. Production **b
 
 | Path | Role |
 | --- | --- |
-| `src/app` | App Router pages (`/`, `/consultation`, `/privacy`) |
-| `src/components` | UI (`home`, `site`, `motion` stub) |
+| `src/app` | App Router pages (`/`, category routes, `/consultation`, `/privacy`) |
+| `src/components` | UI (`home`, `categories`, `site`, `motion`) |
 | `src/lib` | Brand config, consultation, email, metadata |
 | `src/styles` | Tokens and global CSS |
 | `assets/` | **Read-only** source media — see [`docs/ASSET_GUIDELINES.md`](docs/ASSET_GUIDELINES.md) |
@@ -68,6 +69,7 @@ If any are missing at **submit** time, the form returns an error. Production **b
 | Document | Contents |
 | --- | --- |
 | [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) | Business context, goals, scope, success criteria |
+| [`docs/PRODUCT_CATEGORIES.md`](docs/PRODUCT_CATEGORIES.md) | Four category pages, families, placeholders, open questions |
 | [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md) | Implementation audit, stack, GSAP, assets |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Etapy 1–4: scope, acceptance, decisions |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | App structure, data flow, extension notes |

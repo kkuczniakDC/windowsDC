@@ -76,7 +76,9 @@ Phases align with the agreed product direction. **Completion status reflects the
 - Whether “For architects” remains anchor-only or becomes a full page.
 - Coming-soon UX pattern (inline message vs. dedicated template).
 
-**Status:** *Not started.*
+**Status:** *Partially started (2026-10-30).* Four category presentation pages exist at `/windows`, `/sliding-doors`, `/entrance-doors`, and `/architectural-glazing`, linked from the homepage systems rows. This is a category-presentation milestone, not a catalogue. About, a dedicated For Architects page, product detail routes, and a coming-soon pattern are still out of scope. See `docs/PRODUCT_CATEGORIES.md`.
+
+**URL decision recorded:** descriptive top-level category paths (not `/products/...` and not `/systems/windows`). Header “Systems” remains `/#systems`.
 
 ---
 

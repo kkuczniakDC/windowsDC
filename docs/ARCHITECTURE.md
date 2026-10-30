@@ -2,14 +2,19 @@
 
 ## Overview
 
-Single **Next.js App Router** application: mostly static marketing pages, one **client island** for GSAP, and **Server Actions** for consultation email. No separate API routes, no global state library, no database.
+Single **Next.js App Router** application: static marketing pages, client islands for GSAP, and **Server Actions** for consultation email. No separate API routes, no global state library, no database.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  app/layout.tsx (fonts, SiteHeader, SiteFooter)         │
+│  SiteScrollShell (ScrollSmoother on `/` only)           │
 ├─────────────────────────────────────────────────────────┤
 │  app/page.tsx → HomePage (RSC)                          │
 │    Hero (RSC) │ sections (RSC) │ SignatureSequence (CC) │
+├─────────────────────────────────────────────────────────┤
+│  app/{windows|sliding-doors|entrance-doors|             │
+│       architectural-glazing} → CategoryPage (RSC)       │
+│    CategoryMedia │ CategoryMotion (CC)                  │
 ├─────────────────────────────────────────────────────────┤
 │  app/consultation → page (RSC) + ConsultationForm (CC)  │
 │                    → actions.ts (Server Action)         │
@@ -27,17 +32,21 @@ Single **Next.js App Router** application: mostly static marketing pages, one **
 | `Hero` | Server | Responsive hero imagery via `getImageProps` + `<picture>` |
 | `SignatureSequence` | Client | GSAP ScrollTrigger timeline |
 | `SiteHeader` / `SiteFooter` | Server | Global chrome, anchor links |
+| `CategoryPage` | Server | Shared category presentation, art-directed per `data-category` |
+| `CategoryMedia` | Server | Replaceable image slot or designed CSS/SVG placeholder |
+| `CategoryMotion` | Client | Category-page GSAP (`useGSAP`, matchMedia, reduced motion) |
 | `ConsultationForm` | Client | Form state, accessibility, submit |
 | `submitConsultationForm` | Server Action | Validation, rate limit, email |
 
-**Coupling:** Homepage sections import images directly from `assets/`. There is no shared `Media` abstraction yet.
+**Coupling:** Homepage sections import images directly from `assets/`. Category pages use `CategoryMedia` for product slots and optional inspiration imports.
 
 ## Routing and navigation
 
 - File-system routing under `src/app/`.
 - Shared layout wraps all pages with the same header/footer (consultation/privacy use their own `<main id="main-content">`—duplicate skip target id per page, which is acceptable when one main per document).
 - In-page anchors on `/` for systems, approach, architects, atmospheres.
-- Route map centralized in `src/lib/brand.ts`—extend here when adding pages.
+- Category routes: `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing`.
+- Route map centralized in `src/lib/brand.ts`.
 
 ## State management
 
@@ -55,25 +64,23 @@ Future pages should reuse tokens and global utilities before introducing new pat
 
 ## Animation architecture
 
-- GSAP is **localized** to `SignatureSequence` (good for maintenance).
-- Enhancement gate matches CSS breakpoints: desktop-ish viewport, fine pointer, no reduced motion.
-- Fallback: vertical stack of three scenes without pin/scrub (CSS default `.scenes { flex-direction: column }`).
+- Plugins register once via `registerGsapClientPlugins()` (`ScrollTrigger`, `ScrollSmoother`).
+- Homepage: `SignatureSequence` (pinned scrub on desktop fine-pointer, no reduced motion), `ScrollDriftFigure`, `SiteScrollShell` smoother gated to `pathname === "/"`.
+- Category pages: `CategoryMotion` only—no pins, no ScrollSmoother, no `data-speed`. Gated on `prefers-reduced-motion: no-preference`.
+- Sequence fallback: vertical stack of three scenes without pin/scrub (CSS default `.scenes { flex-direction: column }`).
 
-**Recommendations (future, not implemented):**
-
-- Extract shared `registerGsapOnce()` if more motion components appear.
-- Add optional `ScrollTrigger.refresh()` on font/load if layout shift appears in QA.
-- Keep new motion behind the same approval process (`.cursor/rules/gsap-animation.mdc`).
+Keep new motion behind the same approval process (`.cursor/rules/gsap-animation.mdc`).
 
 ## Data and content
 
 | Module | Status |
 | --- | --- |
-| `src/lib/content/index.ts` | Stub |
+| `src/lib/content/categories.ts` | Typed category and family copy |
+| `src/lib/content/index.ts` | Re-exports category helpers |
 | `src/content/` | Empty placeholder |
-| Marketing copy | Inline in TSX |
+| Homepage marketing copy | Still inline in TSX |
 
-**Recommendation:** Introduce typed content (MDX, JSON, or CMS) when Etap 2+ adds pages—avoid scattering strings across components.
+Future catalogue/admin can replace the category module without changing `CategoryPage` layout. Family `detailHref` is reserved and unset. See `docs/PRODUCT_CATEGORIES.md`.
 
 ## Email and security (consultation)
 
