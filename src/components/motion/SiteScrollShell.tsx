@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -19,6 +19,38 @@ type SiteScrollShellProps = {
 };
 
 const HEADER_SCROLL_OFFSET = "top 5.5rem";
+
+/** Run after React hydration so ScrollSmoother DOM writes do not mismatch SSR HTML. */
+function afterHydration(callback: () => void) {
+  return window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(callback);
+  });
+}
+
+/** Route changes must jump to the top. CSS `scroll-behavior: smooth` would animate the old offset across the new page. */
+function resetWindowScroll() {
+  const root = document.documentElement;
+  const body = document.body;
+  const previousRoot = root.style.scrollBehavior;
+  const previousBody = body.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  body.style.scrollBehavior = "auto";
+  body.style.removeProperty("height");
+  window.scrollTo(0, 0);
+
+  if (previousRoot) {
+    root.style.scrollBehavior = previousRoot;
+  } else {
+    root.style.removeProperty("scroll-behavior");
+  }
+
+  if (previousBody) {
+    body.style.scrollBehavior = previousBody;
+  } else {
+    body.style.removeProperty("scroll-behavior");
+  }
+}
 
 function scrollToHashTarget(hash: string) {
   const id = hash.replace(/^#/, "");
@@ -44,8 +76,32 @@ export function SiteScrollShell({
   const isHome = pathname === "/";
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const skipScrollResetRef = useRef(false);
 
   useEffect(() => {
+    const onPopState = () => {
+      skipScrollResetRef.current = true;
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (skipScrollResetRef.current) {
+      skipScrollResetRef.current = false;
+      return;
+    }
+
+    if (window.location.hash) {
+      return;
+    }
+
+    resetWindowScroll();
+    ScrollTrigger.clearScrollMemory();
+  }, [pathname]);
+
+  useLayoutEffect(() => {
     registerGsapClientPlugins();
     const root = document.documentElement;
     root.dataset.scrollSmoother = "off";
@@ -66,62 +122,88 @@ export function SiteScrollShell({
     }
 
     const media = gsap.matchMedia();
+    let cancelled = false;
+    const hydrationFrame = afterHydration(() => {
+      if (cancelled) {
+        return;
+      }
 
-    media.add(scrollSmootherMedia, () => {
-      wrapper.dataset.enhanced = "true";
+      media.add(scrollSmootherMedia, () => {
+        wrapper.dataset.enhanced = "true";
 
-      const smoother = ScrollSmoother.create({
-        wrapper,
-        content,
-        smooth: 0.85,
-        smoothTouch: 0,
-        effects: true,
-        normalizeScroll: true,
-        ignoreMobileResize: true,
-      });
+        const smoother = ScrollSmoother.create({
+          wrapper,
+          content,
+          smooth: 0.85,
+          smoothTouch: 0,
+          effects: true,
+          normalizeScroll: true,
+          ignoreMobileResize: true,
+        });
 
-      root.dataset.scrollSmoother = "active";
-      ScrollTrigger.refresh();
-
-      const onClick = (event: MouseEvent) => {
-        const anchor = (event.target as Element | null)?.closest<HTMLAnchorElement>(
-          "a[href*='#']",
-        );
-
-        if (!anchor) {
-          return;
-        }
-
-        const url = new URL(anchor.href, window.location.href);
-
-        if (url.pathname !== "/" || !url.hash) {
-          return;
-        }
-
-        event.preventDefault();
-        scrollToHashTarget(url.hash);
-        window.history.pushState(null, "", url.hash);
-      };
-
-      document.addEventListener("click", onClick);
-
-      const hashFrame = window.requestAnimationFrame(() => {
-        if (window.location.hash) {
-          scrollToHashTarget(window.location.hash);
-        }
-      });
-
-      return () => {
-        window.cancelAnimationFrame(hashFrame);
-        document.removeEventListener("click", onClick);
-        smoother.kill();
-        delete wrapper.dataset.enhanced;
-        root.dataset.scrollSmoother = "off";
+        root.dataset.scrollSmoother = "active";
         ScrollTrigger.refresh();
-      };
+
+        const onClick = (event: MouseEvent) => {
+          const anchor = (event.target as Element | null)?.closest<HTMLAnchorElement>(
+            "a[href*='#']",
+          );
+
+          if (!anchor) {
+            return;
+          }
+
+          const url = new URL(anchor.href, window.location.href);
+
+          if (url.pathname !== "/" || !url.hash) {
+            return;
+          }
+
+          event.preventDefault();
+          scrollToHashTarget(url.hash);
+          window.history.pushState(null, "", url.hash);
+        };
+
+        document.addEventListener("click", onClick);
+
+        const hashFrame = window.requestAnimationFrame(() => {
+          if (window.location.hash) {
+            scrollToHashTarget(window.location.hash);
+          }
+        });
+
+        return () => {
+          window.cancelAnimationFrame(hashFrame);
+          document.removeEventListener("click", onClick);
+          smoother.kill();
+          delete wrapper.dataset.enhanced;
+          root.dataset.scrollSmoother = "off";
+          document.body.style.removeProperty("height");
+          // ScrollTrigger.refresh() replays the recorded window offset. Clear it
+          // before refresh so the shorter next page is not clamped to that offset.
+          ScrollTrigger.clearScrollMemory();
+          if (!skipScrollResetRef.current && !window.location.hash) {
+            resetWindowScroll();
+          }
+          ScrollTrigger.refresh();
+          ScrollTrigger.clearScrollMemory();
+          if (!skipScrollResetRef.current && !window.location.hash) {
+            resetWindowScroll();
+            window.requestAnimationFrame(() => {
+              if (skipScrollResetRef.current || window.location.hash) {
+                return;
+              }
+              resetWindowScroll();
+              ScrollTrigger.clearScrollMemory();
+            });
+          }
+        };
+      });
     });
 
     return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(hydrationFrame);
       media.revert();
       delete root.dataset.scrollSmoother;
     };
