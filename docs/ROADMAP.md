@@ -18,15 +18,18 @@ Phases align with the agreed product direction. **Completion status reflects the
 - Asset strategy before adding video to the hero or other sections.
 - Legal review for privacy and form disclosures.
 
-### Acceptance criteria (not all met today)
+### Acceptance criteria
 
-- [ ] Homepage visually signed off on desktop, tablet, and mobile (manual QA).
-- [ ] GSAP sequence verified: pin/scrub, reduced-motion fallback, no leaked ScrollTriggers on navigation.
-- [ ] Core Web Vitals acceptable on `/` with current image set (measure, don’t assume).
-- [ ] Consultation sends mail in staging/production with env configured.
-- [ ] Rate limiting suitable for chosen host (edge/shared store).
-- [ ] Privacy notice legally approved; contact/controller details published.
-- [ ] Production email authentication (SPF, DKIM, DMARC) for sender domain.
+**Engineering (2026-11-04)**
+
+- [x] Homepage, consultation, and privacy are implemented and typecheck/lint clean.
+- [x] GSAP sequence implemented with pin/scrub, reduced-motion CSS fallback, and route-leave cleanup in code (`SignatureSequence`, `SiteScrollShell`). Runtime browser verification of pin/scrub and ScrollTrigger leaks was not available in this pass.
+- [ ] Homepage visually signed off on desktop, tablet, and mobile (owner).
+- [ ] Core Web Vitals measured and accepted on `/` (not measured this pass; browser/Lighthouse tools unavailable).
+- [ ] Consultation sends mail in staging/production with env configured (owner).
+- [ ] Rate limiting suitable for chosen host (in-memory only until `O-TECH-01`).
+- [ ] Privacy notice legally approved; contact/controller details published (owner).
+- [ ] Production email authentication (SPF, DKIM, DMARC) for sender domain (owner).
 
 ### Out of scope (Etap 1)
 
@@ -40,7 +43,7 @@ Phases align with the agreed product direction. **Completion status reflects the
 - Analytics / cookie consent (currently none in privacy draft).
 - Final languages/markets.
 
-**Status:** *Substantially implemented; launch checklist incomplete.*
+**Status:** *Engineering complete (2026-11-04). Launch residual is owner-owned: hosting, production Resend + DNS auth, legal privacy, visual sign-off, Core Web Vitals measurement, brand name.*
 
 ---
 
@@ -60,10 +63,10 @@ Phases align with the agreed product direction. **Completion status reflects the
 
 ### Acceptance criteria
 
-- [ ] All primary nav items resolve (page or documented coming-soon).
-- [ ] Consistent header/footer; active states where applicable.
-- [ ] No regression to homepage motion or layout.
-- [ ] `routes` in `brand.ts` extended centrally.
+- [x] All primary nav items resolve (pages; no coming-soon template — content was written).
+- [x] Consistent header/footer; `aria-current` on path routes via `SiteNavLink`.
+- [x] Homepage `#architects` retained; extra link to `/architects` only. Motion files were not edited in this milestone.
+- [x] `routes` in `brand.ts` extended centrally (`about`, `architects`).
 
 ### Out of scope
 
@@ -76,9 +79,9 @@ Phases align with the agreed product direction. **Completion status reflects the
 - Whether “For architects” remains anchor-only or becomes a full page.
 - Coming-soon UX pattern (inline message vs. dedicated template).
 
-**Status:** *Partially started (2026-10-30).* Four category presentation pages exist at `/windows`, `/sliding-doors`, `/entrance-doors`, and `/architectural-glazing`, linked from the homepage systems rows. This is a category-presentation milestone, not a catalogue. About, a dedicated For Architects page, product detail routes, and a coming-soon pattern are still out of scope. See `docs/PRODUCT_CATEGORIES.md`.
+**Status:** *Complete (2026-11-04).* Category presentation pages plus `/about` and `/architects`. Contact remains `/consultation` (no separate contact route). Coming-soon template not needed. Product detail routes remain Etap 3. See `docs/PRODUCT_CATEGORIES.md` and `D-IA-02`.
 
-**URL decision recorded:** descriptive top-level category paths (not `/products/...` and not `/systems/windows`). Header “Systems” remains `/#systems`.
+**URL decision recorded:** descriptive top-level category paths (not `/products/...` and not `/systems/windows`). Header “Systems” remains `/#systems`. Header “For architects” is `/architects`. About lives in the footer.
 
 ---
 

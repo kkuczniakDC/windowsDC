@@ -1,6 +1,6 @@
 # Current state (implementation audit)
 
-*Audit date: 2026-10-30 (category pages). Previous baseline 2026-10-29. Based on repository inspection plus HTTP checks of `/`, `/windows`, `/sliding-doors`, `/entrance-doors`, and `/architectural-glazing`. Visual screenshot pass in the agent browser was not available on this run.*
+*Audit date: 2026-11-04 (About / Architects + Etap 1 engineering close). Previous baselines 2026-10-30 (category pages) and 2026-10-29. Typecheck and lint passed. Agent browser tools were not available in this pass, so visual/CWV/GSAP runtime verification is still open for the owner.*
 
 ## Stack
 
@@ -42,13 +42,15 @@ public/               Empty except .gitkeep (no static media served from here ye
 | `/sliding-doors` | Static | Sliding doors category presentation |
 | `/entrance-doors` | Static | Entrance doors category presentation |
 | `/architectural-glazing` | Static | Architectural glazing category presentation |
-| `/consultation` | Static shell; form posts Server Action | Lead capture |
+| `/about` | Static | Brand / practice editorial page |
+| `/architects` | Static | For architects editorial page |
+| `/consultation` | Static shell; form posts Server Action | Lead capture (also the contact channel) |
 | `/privacy` | Static | Draft privacy notice |
 | `/_not-found` | Default | 404 |
 
-No `/about`, product-detail, or separate `/contact` route—consultation still serves contact intent. Category IA is documented in `docs/PRODUCT_CATEGORIES.md`.
+No product-detail or separate `/contact` route—consultation still serves contact intent. Category IA is documented in `docs/PRODUCT_CATEGORIES.md`. About and Architects share `EditorialPage` (no GSAP).
 
-Central route constants: `src/lib/brand.ts` (`routes.home`, `windows`, `slidingDoors`, `entranceDoors`, `architecturalGlazing`, `consultation`, `privacy`).
+Central route constants: `src/lib/brand.ts` (`routes.home`, `about`, `architects`, `windows`, `slidingDoors`, `entranceDoors`, `architecturalGlazing`, `consultation`, `privacy`).
 
 ## Homepage composition
 
@@ -65,7 +67,7 @@ Implemented in `src/components/home/HomePage.tsx` (server component) with client
 | 06 | Atmosphere studies | `#atmospheres` | Image + disclaimer about reference photography |
 | 07 | Begin (final CTA) | — | Consultation CTA |
 
-Header/footer link to anchors and `/consultation`.
+Header: Systems `/#systems`, Approach `/#approach`, For architects `/architects`, CTA `/consultation`. Footer Explore also includes About. Homepage `#architects` is retained and links onward to `/architects`.
 
 ## GSAP integration
 
@@ -147,8 +149,8 @@ Production gaps documented in `README.md` (shared rate limiter, legal finalizati
 
 1. **Consultation rate limiting** is in-process only—not safe for multi-instance serverless without replacement.
 2. **Brand/contact** placeholders (`contact.email` / `phone` null in `brand.ts`).
-3. **Content layer** — category copy is typed in `src/lib/content/categories.ts`; homepage copy remains inline in TSX. `src/content/` is still empty. No CMS or admin.
+3. **Content layer** — category copy in `src/lib/content/categories.ts`; About/Architects in `about.ts` / `architects.ts`; homepage copy remains inline in TSX. `src/content/` is still empty. No CMS or admin.
 4. **Product detail routes** do not exist yet. Family blocks are in-page articles; `detailHref` is reserved and unset.
 5. **Videos and most photos** unused—risk of accidental commit bloat if served without optimization strategy.
-6. **Motion verification** not run in browser during this documentation pass.
+6. **Motion verification** — code audit 2026-11-04 matches Etap 1 structure (pin/scrub, reduced-motion fallback, smoother homepage-only). Runtime browser verification and Core Web Vitals were not measured (agent browser tools unavailable). Pre-existing uncommitted `SiteScrollShell` hydration/scroll-reset work was left untouched.
 7. **visual-design.mdc** frontmatter appears duplicated/conflicting (`alwaysApply` true and false)—see architecture/decisions docs; rule behavior in Cursor may be ambiguous until cleaned up (recommendation only; not changed in this pass).

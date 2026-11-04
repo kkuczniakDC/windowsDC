@@ -12,6 +12,7 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | D-TECH-02 | npm as package manager; scripts for dev/build/lint/typecheck | `package.json` |
 | D-TECH-03 | GSAP + ScrollTrigger for homepage signature sequence; ScrollSmoother homepage-only; category pages use `CategoryMotion` without pins | `SignatureSequence.tsx`, `SiteScrollShell.tsx`, `CategoryMotion.tsx` |
 | D-IA-01 | Category URLs are `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing` | `brand.ts`, App Router pages |
+| D-IA-02 | About is `/about`; For architects is `/architects`; Contact remains `/consultation`; no coming-soon template | `brand.ts`, `src/app/about`, `src/app/architects` |
 | D-CONTENT-02 | Descriptive family names only; no manufacturer brands as product names | `src/lib/content/categories.ts` |
 | D-CONTENT-03 | No invented specs (U-values, sizes, security, acoustics, guarantees) on category pages | `docs/PRODUCT_CATEGORIES.md` |
 | D-TECH-04 | Consultation via Server Action + Zod + Resend HTTP API | `actions.ts`, `lib/email/` |
@@ -29,7 +30,7 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | W-BIZ-01 | Brand | Premium line possibly separate from existing company |
 | W-BIZ-02 | Naming | Southern Windows is provisional |
 | W-BIZ-03 | Products | Future named products with technical sheets |
-| W-BIZ-04 | Contact | Consultation form is primary lead channel for now |
+| W-BIZ-04 | Contact | Consultation form is the contact channel; no separate `/contact` route |
 | W-VIS-01 | Art direction | Warm Editorial palette and typography as baseline |
 
 ---
@@ -45,7 +46,7 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | O-TECH-02 | Analytics and cookie consent? | Privacy copy, implementation |
 | O-TECH-03 | CRM integration for consultation leads? | Etap 4 vs. manual inbox |
 | O-CONTENT-01 | When to use the 4 unused videos on homepage or elsewhere? | Performance budget, hero design |
-| O-IA-01 | URL plan for remaining pages (About, For architects, product details)? Category URLs decided in D-IA-01. | Rest of Etap 2 / Etap 3 |
+| O-IA-01 | URL plan for product detail pages? About/Architects decided in D-IA-02; categories in D-IA-01. | Etap 3 |
 | O-CMS-01 | Headless CMS vs. custom admin vs. files? | Etap 3 |
 
 ---

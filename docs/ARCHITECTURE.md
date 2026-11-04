@@ -16,6 +16,8 @@ Single **Next.js App Router** application: static marketing pages, client island
 │       architectural-glazing} → CategoryPage (RSC)       │
 │    CategoryMedia │ CategoryMotion (CC)                  │
 ├─────────────────────────────────────────────────────────┤
+│  app/about | architects → EditorialPage (RSC)           │
+├─────────────────────────────────────────────────────────┤
 │  app/consultation → page (RSC) + ConsultationForm (CC)  │
 │                    → actions.ts (Server Action)         │
 │                    → lib/consultation/*, lib/email/*    │
@@ -31,7 +33,8 @@ Single **Next.js App Router** application: static marketing pages, client island
 | `HomePage` | Server | Composes homepage sections |
 | `Hero` | Server | Responsive hero imagery via `getImageProps` + `<picture>` |
 | `SignatureSequence` | Client | GSAP ScrollTrigger timeline |
-| `SiteHeader` / `SiteFooter` | Server | Global chrome, anchor links |
+| `SiteHeader` / `SiteFooter` | Server | Global chrome; `SiteNavLink` client island for `aria-current` |
+| `EditorialPage` | Server | Shared About / Architects shell (ink intro, no GSAP) |
 | `CategoryPage` | Server | Shared category presentation, art-directed per `data-category` |
 | `CategoryMedia` | Server | Replaceable image slot or designed CSS/SVG placeholder |
 | `CategoryMotion` | Client | Category-page GSAP (`useGSAP`, matchMedia, reduced motion) |
@@ -46,6 +49,7 @@ Single **Next.js App Router** application: static marketing pages, client island
 - Shared layout wraps all pages with the same header/footer (consultation/privacy use their own `<main id="main-content">`—duplicate skip target id per page, which is acceptable when one main per document).
 - In-page anchors on `/` for systems, approach, architects, atmospheres.
 - Category routes: `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing`.
+- Editorial routes: `/about`, `/architects`. Contact remains `/consultation`.
 - Route map centralized in `src/lib/brand.ts`.
 
 ## State management
@@ -76,7 +80,8 @@ Keep new motion behind the same approval process (`.cursor/rules/gsap-animation.
 | Module | Status |
 | --- | --- |
 | `src/lib/content/categories.ts` | Typed category and family copy |
-| `src/lib/content/index.ts` | Re-exports category helpers |
+| `src/lib/content/about.ts` / `architects.ts` | Typed editorial copy |
+| `src/lib/content/index.ts` | Re-exports content helpers |
 | `src/content/` | Empty placeholder |
 | Homepage marketing copy | Still inline in TSX |
 

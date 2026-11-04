@@ -1,14 +1,15 @@
 # Southern Windows (working name)
 
-Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, four product category pages, project consultation, and a draft privacy notice.
+Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, category pages, About and For architects, project consultation, and a draft privacy notice.
 
 ## Status
 
 | Area | State |
 | --- | --- |
-| Homepage (`/`) | Implemented; launch QA and motion verification still open |
+| Homepage (`/`) | Implemented; owner launch QA, CWV, and production mail still open |
 | Category pages | Implemented: `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing` — see [`docs/PRODUCT_CATEGORIES.md`](docs/PRODUCT_CATEGORIES.md) |
-| Consultation (`/consultation`) | Implemented; needs production mail, rate limits, legal sign-off |
+| About / Architects | Implemented: `/about`, `/architects` |
+| Consultation (`/consultation`) | Implemented; needs production mail, host rate limits, legal sign-off |
 | Privacy (`/privacy`) | Pre-launch draft |
 | Product catalogue / admin | Not started — see roadmap |
 
@@ -56,7 +57,7 @@ If any are missing at **submit** time, the form returns an error. Production **b
 
 | Path | Role |
 | --- | --- |
-| `src/app` | App Router pages (`/`, category routes, `/consultation`, `/privacy`) |
+| `src/app` | App Router pages (`/`, categories, `/about`, `/architects`, `/consultation`, `/privacy`) |
 | `src/components` | UI (`home`, `categories`, `site`, `motion`) |
 | `src/lib` | Brand config, consultation, email, metadata |
 | `src/styles` | Tokens and global CSS |
