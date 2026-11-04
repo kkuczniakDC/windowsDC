@@ -171,9 +171,14 @@ export function HomePage() {
             performance and delivery while the opening can still shape the
             architecture.
           </p>
-          <Link className="text-link" href={routes.consultation}>
-            Start a project conversation
-          </Link>
+          <div className={styles.collaborationLinks}>
+            <Link className="text-link" href={routes.consultation}>
+              Start a project conversation
+            </Link>
+            <Link className="text-link" href={routes.architects}>
+              Continue to the architects page
+            </Link>
+          </div>
         </div>
         <ol className={styles.process}>
           <li>

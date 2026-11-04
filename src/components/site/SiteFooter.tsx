@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import { brandConfig, routes } from "@/lib/brand";
+
+import { SiteNavLink } from "./SiteNavLink";
 import styles from "./SiteFooter.module.css";
 
 export function SiteFooter() {
@@ -17,14 +19,15 @@ export function SiteFooter() {
         <nav className={styles.links} aria-label="Footer">
           <div>
             <p>Explore</p>
-            <Link href="/#systems">Systems</Link>
-            <Link href="/#approach">Approach</Link>
-            <Link href="/#architects">For architects</Link>
+            <SiteNavLink href="/#systems">Systems</SiteNavLink>
+            <SiteNavLink href="/#approach">Approach</SiteNavLink>
+            <SiteNavLink href={routes.architects}>For architects</SiteNavLink>
+            <SiteNavLink href={routes.about}>About</SiteNavLink>
           </div>
           <div>
             <p>Begin</p>
-            <Link href="/consultation">Project consultation</Link>
-            <Link href="/#atmospheres">Atmosphere studies</Link>
+            <SiteNavLink href={routes.consultation}>Project consultation</SiteNavLink>
+            <SiteNavLink href="/#atmospheres">Atmosphere studies</SiteNavLink>
           </div>
         </nav>
         <div className={styles.legal}>

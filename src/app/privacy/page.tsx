@@ -35,7 +35,18 @@ export default function PrivacyPage() {
           <p>
             We use your submission only to review your project enquiry and
             contact you about it using the details you provide. We do not use
-            this site for advertising cookies or analytics in this phase.
+            this site for advertising cookies or analytics in this phase, and
+            no cookie-consent banner is present.
+          </p>
+          <p>
+            A public telephone number and general inbox are not published on
+            this site. Enquiries are accepted through the{" "}
+            <Link className="text-link" href={routes.consultation}>
+              project consultation form
+            </Link>{" "}
+            only. The data controller identity, registered address and staff
+            contact details have not been published yet; they must appear here
+            before launch.
           </p>
         </section>
 

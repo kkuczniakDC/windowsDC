@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import { brandConfig, routes } from "@/lib/brand";
+
+import { SiteNavLink } from "./SiteNavLink";
 import styles from "./SiteHeader.module.css";
 
 export function SiteHeader() {
@@ -14,14 +16,14 @@ export function SiteHeader() {
           ) : null}
         </Link>
         <div className={styles.primaryLinks}>
-          <Link href="/#systems">Systems</Link>
-          <Link href="/#approach">Approach</Link>
-          <Link href="/#architects">For architects</Link>
+          <SiteNavLink href="/#systems">Systems</SiteNavLink>
+          <SiteNavLink href="/#approach">Approach</SiteNavLink>
+          <SiteNavLink href={routes.architects}>For architects</SiteNavLink>
         </div>
-        <Link className={styles.consultation} href={routes.consultation}>
+        <SiteNavLink className={styles.consultation} href={routes.consultation}>
           Book a consultation
           <span aria-hidden="true">↗</span>
-        </Link>
+        </SiteNavLink>
       </nav>
     </header>
   );

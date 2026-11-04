@@ -8,3 +8,6 @@ export {
   type CategoryFamily,
   type CategoryId,
 } from "./categories";
+
+export { aboutContent } from "./about";
+export { architectsContent } from "./architects";

@@ -69,7 +69,8 @@
 }
 
 .primaryLinks a:hover::after,
-.primaryLinks a:focus-visible::after {
+.primaryLinks a:focus-visible::after,
+.primaryLinks a[aria-current="page"]::after {
   transform: scaleX(1);
   transform-origin: left;
 }

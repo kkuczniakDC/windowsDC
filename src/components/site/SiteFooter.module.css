@@ -73,7 +73,8 @@
   transition: text-decoration-color 180ms var(--ease-out);
 }
 
-.links a:hover {
+.links a:hover,
+.links a[aria-current="page"] {
   text-decoration-color: currentColor;
 }
 

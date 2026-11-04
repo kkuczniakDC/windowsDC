@@ -16,6 +16,8 @@ export const brandConfig = {
 
 export const routes = {
   home: "/",
+  about: "/about",
+  architects: "/architects",
   consultation: "/consultation",
   privacy: "/privacy",
   windows: "/windows",
