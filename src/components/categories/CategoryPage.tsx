@@ -175,7 +175,7 @@ export function CategoryPage({ category }: CategoryPageProps) {
           <header className={styles.relatedHeader}>
             <p className="eyebrow">Continue</p>
             <h2 id="related-title">The rest of the language.</h2>
-            <Link className="text-link" href="/#systems">
+            <Link className="text-link" href="/#systems" scroll={false}>
               All systems
             </Link>
           </header>

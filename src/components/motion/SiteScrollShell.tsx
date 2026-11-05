@@ -52,6 +52,16 @@ function resetWindowScroll() {
   }
 }
 
+function isModifiedClick(event: MouseEvent) {
+  return (
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  );
+}
+
 function scrollToHashTarget(hash: string) {
   const id = hash.replace(/^#/, "");
 
@@ -61,10 +71,20 @@ function scrollToHashTarget(hash: string) {
 
   const target = document.getElementById(id);
   const smoother = ScrollSmoother.get();
+  const wrapper = document.getElementById("smooth-wrapper");
+
+  // Native hash / scrollIntoView can move the fixed wrapper, not the window.
+  // ScrollSmoother then thinks we are at the top while the content is offset.
+  if (wrapper) {
+    wrapper.scrollTop = 0;
+  }
 
   if (target && smoother) {
     smoother.scrollTo(target, true, HEADER_SCROLL_OFFSET);
+    return;
   }
+
+  target?.scrollIntoView();
 }
 
 export function SiteScrollShell({
@@ -145,26 +165,63 @@ export function SiteScrollShell({
         ScrollTrigger.refresh();
 
         const onClick = (event: MouseEvent) => {
+          if (event.defaultPrevented || isModifiedClick(event)) {
+            return;
+          }
+
           const anchor = (event.target as Element | null)?.closest<HTMLAnchorElement>(
-            "a[href*='#']",
+            "a[href]",
           );
 
-          if (!anchor) {
+          if (
+            !anchor ||
+            anchor.target === "_blank" ||
+            anchor.hasAttribute("download")
+          ) {
             return;
           }
 
           const url = new URL(anchor.href, window.location.href);
 
-          if (url.pathname !== "/" || !url.hash) {
+          if (
+            url.origin !== window.location.origin ||
+            url.pathname !== window.location.pathname ||
+            !url.hash
+          ) {
             return;
           }
 
+          const targetId = url.hash.slice(1);
+
+          if (!targetId || !document.getElementById(targetId)) {
+            return;
+          }
+
+          // Capture + preventDefault so Next.js Link sees defaultPrevented
+          // and does not treat /#systems as a client navigation (RSC remount
+          // + native scrollIntoView fights ScrollSmoother).
           event.preventDefault();
           scrollToHashTarget(url.hash);
-          window.history.pushState(null, "", url.hash);
+
+          const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+          const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+          if (nextUrl !== currentUrl) {
+            window.history.pushState(window.history.state, "", nextUrl);
+          }
         };
 
-        document.addEventListener("click", onClick);
+        const onHashPop = () => {
+          if (window.location.hash) {
+            scrollToHashTarget(window.location.hash);
+            return;
+          }
+
+          smoother.scrollTo(0, true);
+        };
+
+        document.addEventListener("click", onClick, true);
+        window.addEventListener("popstate", onHashPop);
 
         const hashFrame = window.requestAnimationFrame(() => {
           if (window.location.hash) {
@@ -174,7 +231,8 @@ export function SiteScrollShell({
 
         return () => {
           window.cancelAnimationFrame(hashFrame);
-          document.removeEventListener("click", onClick);
+          document.removeEventListener("click", onClick, true);
+          window.removeEventListener("popstate", onHashPop);
           smoother.kill();
           delete wrapper.dataset.enhanced;
           root.dataset.scrollSmoother = "off";

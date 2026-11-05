@@ -20,7 +20,7 @@ function pathFromHref(href: string): string {
   return withoutHash === "" ? "/" : withoutHash;
 }
 
-export function SiteNavLink({ href, ...props }: SiteNavLinkProps) {
+export function SiteNavLink({ href, scroll, ...props }: SiteNavLinkProps) {
   const pathname = usePathname();
   const hrefValue = hrefToString(href);
   const isHashLink = hrefValue.includes("#");
@@ -30,6 +30,7 @@ export function SiteNavLink({ href, ...props }: SiteNavLinkProps) {
   return (
     <Link
       href={href}
+      scroll={isHashLink ? false : scroll}
       {...props}
       aria-current={isCurrent ? "page" : undefined}
     />

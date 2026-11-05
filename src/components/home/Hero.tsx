@@ -51,7 +51,7 @@ export function Hero() {
           <Link className="button button-primary" href={routes.consultation}>
             Book a project consultation
           </Link>
-          <Link className="text-link" href="#systems">
+          <Link className="text-link" href="#systems" scroll={false}>
             Explore the systems
           </Link>
         </div>
