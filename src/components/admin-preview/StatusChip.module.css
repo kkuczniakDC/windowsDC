@@ -1,0 +1,30 @@
+.chip {
+  display: inline-block;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.draft {
+  color: var(--color-weathered-bronze);
+  border-color: var(--color-weathered-bronze);
+  background-color: var(--color-mineral-plaster);
+}
+
+.published {
+  color: var(--color-moss);
+  border-color: var(--color-moss);
+  background-color: var(--color-warm-paper);
+}
+
+.reference {
+  color: var(--color-weathered-bronze);
+  border-color: var(--color-weathered-bronze);
+  background-color: var(--color-mineral-plaster);
+}

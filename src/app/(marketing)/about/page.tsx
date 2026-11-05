@@ -3,7 +3,7 @@ import { routes } from "@/lib/brand";
 import { aboutContent, getAllCategories } from "@/lib/content";
 import { buildPageMetadata } from "@/lib/metadata";
 
-import aboutImage from "../../../assets/greyson-growth-yRcRrCIqxtw-unsplash.jpg";
+import aboutImage from "../../../../assets/greyson-growth-yRcRrCIqxtw-unsplash.jpg";
 
 export const metadata = buildPageMetadata(
   aboutContent.metadataTitle,

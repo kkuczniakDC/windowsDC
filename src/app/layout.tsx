@@ -1,6 +1,5 @@
-import { SiteScrollShell } from "@/components/motion/SiteScrollShell";
-import { SiteFooter } from "@/components/site/SiteFooter";
-import { SiteHeader } from "@/components/site/SiteHeader";
+import type { ReactNode } from "react";
+
 import { buildRootMetadata } from "@/lib/metadata";
 import { Newsreader, Source_Sans_3 } from "next/font/google";
 import "@/styles/global.css";
@@ -19,23 +18,13 @@ const sourceSans = Source_Sans_3({
 
 export const metadata = buildRootMetadata();
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
       className={`${newsreader.variable} ${sourceSans.variable}`}
     >
-      <body className="site-shell">
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <SiteScrollShell
-          header={<SiteHeader />}
-          footer={<SiteFooter />}
-        >
-          {children}
-        </SiteScrollShell>
-      </body>
+      <body className="site-shell">{children}</body>
     </html>
   );
 }

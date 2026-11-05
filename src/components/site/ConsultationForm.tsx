@@ -14,10 +14,10 @@ import {
   initialConsultationFormState,
   type ConsultationFormFields,
   type ConsultationFormState,
-} from "@/app/consultation/form-state";
-import { submitConsultationForm } from "@/app/consultation/actions";
+} from "@/app/(marketing)/consultation/form-state";
+import { submitConsultationForm } from "@/app/(marketing)/consultation/actions";
 import { routes } from "@/lib/brand";
-import styles from "@/app/consultation/consultation.module.css";
+import styles from "@/app/(marketing)/consultation/consultation.module.css";
 
 const FIELD_ORDER: (keyof ConsultationFormFields)[] = [
   "name",

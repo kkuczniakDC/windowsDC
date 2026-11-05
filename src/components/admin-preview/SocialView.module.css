@@ -1,0 +1,31 @@
+.panel {
+  padding: var(--space-10) var(--space-6);
+  background-color: var(--color-mineral-plaster);
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  max-width: 36rem;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-weathered-bronze);
+}
+
+.title {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: var(--line-height-body);
+  color: var(--color-weathered-bronze);
+}

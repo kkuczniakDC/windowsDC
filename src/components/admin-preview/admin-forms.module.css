@@ -1,0 +1,143 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field label {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 32%, transparent);
+  border-radius: 0;
+  background-color: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}
+
+.field textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: var(--line-height-body);
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.error {
+  font-size: 0.82rem;
+  color: var(--color-oxide);
+}
+
+.saved {
+  font-size: 0.82rem;
+  color: var(--color-moss);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.btnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+a.btnPrimary,
+a.btnSecondary {
+  text-decoration: none;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: 0;
+  background-color: var(--color-oxide);
+  color: var(--color-warm-paper);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background-color: color-mix(in srgb, var(--color-oxide) 88%, var(--color-ink));
+}
+
+.btnPrimary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0 var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 32%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btnSecondary:hover {
+  background-color: color-mix(in srgb, var(--color-ink) 4%, transparent);
+}
+
+.btnSecondary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.btnPrimary:disabled,
+.btnSecondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.externalLink {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-oxide);
+}
+
+.externalLink:hover {
+  color: var(--color-oxide);
+}
+
+.externalLink:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}

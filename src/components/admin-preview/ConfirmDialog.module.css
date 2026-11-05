@@ -1,0 +1,33 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: color-mix(in srgb, var(--color-ink) 45%, transparent);
+}
+
+.dialog {
+  width: 100%;
+  max-width: 28rem;
+  padding: var(--space-6);
+  background-color: var(--color-mineral-plaster);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  border-radius: 0;
+}
+
+.title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.description {
+  margin: 0 0 var(--space-6);
+  font-size: 0.95rem;
+  line-height: var(--line-height-body);
+  color: var(--color-weathered-bronze);
+}

@@ -2,7 +2,7 @@ import { EditorialPage } from "@/components/site/EditorialPage";
 import { architectsContent, getAllCategories } from "@/lib/content";
 import { buildPageMetadata } from "@/lib/metadata";
 
-import architectsImage from "../../../assets/miguel-luis-r6uVcUq0I8E-unsplash.jpg";
+import architectsImage from "../../../../assets/miguel-luis-r6uVcUq0I8E-unsplash.jpg";
 
 export const metadata = buildPageMetadata(
   architectsContent.metadataTitle,

@@ -1,0 +1,12 @@
+.banner {
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-ink);
+  color: var(--color-warm-paper);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warm-paper) 20%, transparent);
+}

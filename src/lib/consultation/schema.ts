@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { ConsultationFormFields } from "@/app/consultation/form-state";
+import type { ConsultationFormFields } from "@/app/(marketing)/consultation/form-state";
 
 export const CONSULTATION_FIELD_LIMITS = {
   name: 120,
