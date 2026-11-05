@@ -26,60 +26,50 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <>
-      {mobileOpen ? (
-        <button
-          type="button"
-          className={`${styles.overlay} ${styles.overlayVisible}`}
-          aria-label="Close navigation"
+    <aside
+      className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ""}`}
+      aria-label="Admin preview navigation"
+    >
+      <div className={styles.brand}>
+        <p className={styles.wordmark}>{brandConfig.workingName}</p>
+        {brandConfig.isWorkingNameTemporary ? (
+          <p className={styles.workingTitle}>Working title</p>
+        ) : null}
+        <p className={styles.workspaceLabel}>Admin preview</p>
+      </div>
+
+      <nav className={styles.nav}>
+        <ul className={styles.navList}>
+          {NAV.map((item) => {
+            const active =
+              "exact" in item && item.exact
+                ? pathname === item.href
+                : pathname.startsWith(item.href);
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  onClick={onCloseMobile}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <div className={styles.footer}>
+        <Link
+          href={routes.home}
+          className={formStyles.externalLink}
           onClick={onCloseMobile}
-        />
-      ) : null}
-      <aside
-        className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ""}`}
-        aria-label="Admin preview navigation"
-      >
-        <div className={styles.brand}>
-          <p className={styles.wordmark}>{brandConfig.workingName}</p>
-          {brandConfig.isWorkingNameTemporary ? (
-            <p className={styles.workingTitle}>Working title</p>
-          ) : null}
-          <p className={styles.workspaceLabel}>Admin preview</p>
-        </div>
-
-        <nav className={styles.nav}>
-          <ul className={styles.navList}>
-            {NAV.map((item) => {
-              const active =
-                "exact" in item && item.exact
-                  ? pathname === item.href
-                  : pathname.startsWith(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
-                    aria-current={active ? "page" : undefined}
-                    onClick={onCloseMobile}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className={styles.footer}>
-          <Link
-            href={routes.home}
-            className={formStyles.externalLink}
-            onClick={onCloseMobile}
-          >
-            View public site ↗
-          </Link>
-        </div>
-      </aside>
-    </>
+        >
+          View public site ↗
+        </Link>
+      </div>
+    </aside>
   );
 }

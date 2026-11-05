@@ -45,7 +45,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
         </a>
         <DemoBanner />
         <div className={styles.frame}>
-          <div id="admin-sidebar">
+          {mobileOpen ? (
+            <button
+              type="button"
+              className={styles.overlay}
+              aria-label="Close navigation"
+              onClick={() => setMobileOpen(false)}
+            />
+          ) : null}
+          <div id="admin-sidebar" className={styles.sidebarSlot}>
             <AdminSidebar
               mobileOpen={mobileOpen}
               onCloseMobile={() => setMobileOpen(false)}

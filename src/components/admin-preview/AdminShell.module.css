@@ -1,5 +1,9 @@
 .root {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background-color: var(--color-warm-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -28,8 +32,11 @@
 }
 
 .frame {
+  position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
+  min-height: 0;
 }
 
 @media (min-width: 48rem) {
@@ -39,9 +46,40 @@
   }
 }
 
+.sidebarSlot {
+  min-height: 0;
+}
+
+@media (min-width: 48rem) {
+  .sidebarSlot {
+    flex-shrink: 0;
+    height: 100%;
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  cursor: pointer;
+  appearance: none;
+}
+
+@media (min-width: 48rem) {
+  .overlay {
+    display: none;
+  }
+}
+
 .mainWrap {
   flex: 1;
   min-width: 0;
+  min-height: 0;
+  overflow: auto;
   padding: var(--space-6) var(--space-4) var(--space-12);
 }
 

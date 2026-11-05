@@ -1,4 +1,7 @@
 .banner {
+  position: relative;
+  z-index: 50;
+  flex-shrink: 0;
   padding: var(--space-2) var(--space-4);
   background-color: var(--color-ink);
   color: var(--color-warm-paper);

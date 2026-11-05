@@ -94,14 +94,14 @@ export function MediaView() {
               ) : (
                 <div className={styles.thumbPlaceholder}>No preview</div>
               )}
-              <div>
+              <div className={styles.file}>
                 <p className={styles.filename}>{item.filename}</p>
                 <p className={styles.caption}>{item.caption}</p>
                 {item.kind === "metadata-only" && item.note ? (
                   <p className={styles.metaOnly}>{item.note}</p>
                 ) : null}
               </div>
-              <span className={styles.caption}>
+              <span className={styles.kind}>
                 {item.kind === "image"
                   ? `JPEG · ${item.width} × ${item.height}`
                   : item.filename.endsWith(".mp4")
