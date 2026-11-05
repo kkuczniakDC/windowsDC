@@ -2,28 +2,23 @@
 
 ## Overview
 
-Single **Next.js App Router** application: static marketing pages, client islands for GSAP, and **Server Actions** for consultation email. No separate API routes, no global state library, no database.
+Single **Next.js App Router** application: static marketing pages, client islands for GSAP, **Server Actions** for consultation email, and a **frontend-only admin preview**. No separate API routes, no global state library, no database.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  app/layout.tsx (fonts, SiteHeader, SiteFooter)         │
-│  SiteScrollShell (ScrollSmoother on `/` only)           │
-├─────────────────────────────────────────────────────────┤
-│  app/page.tsx → HomePage (RSC)                          │
-│    Hero (RSC) │ sections (RSC) │ SignatureSequence (CC) │
-├─────────────────────────────────────────────────────────┤
-│  app/{windows|sliding-doors|entrance-doors|             │
-│       architectural-glazing} → CategoryPage (RSC)       │
-│    CategoryMedia │ CategoryMotion (CC)                  │
-├─────────────────────────────────────────────────────────┤
-│  app/about | architects → EditorialPage (RSC)           │
-├─────────────────────────────────────────────────────────┤
-│  app/consultation → page (RSC) + ConsultationForm (CC)  │
-│                    → actions.ts (Server Action)         │
-│                    → lib/consultation/*, lib/email/*    │
-├─────────────────────────────────────────────────────────┤
-│  app/privacy → static legal draft (RSC)                 │
-└─────────────────────────────────────────────────────────┘
+│  app/layout.tsx (fonts, tokens, body)                   │
+├──────────────────────────┬──────────────────────────────┤
+│  app/(marketing)/layout  │  app/admin-preview/layout    │
+│  skip-link, SiteHeader,  │  AdminPreviewProvider,       │
+│  SiteFooter,             │  AdminShell, demo banner     │
+│  SiteScrollShell (`/` )  │  noindex / nofollow          │
+├──────────────────────────┼──────────────────────────────┤
+│  (marketing)/page.tsx    │  admin-preview/*             │
+│  HomePage (RSC)          │  Overview / products /       │
+│  categories, about,      │  categories / media /        │
+│  architects,             │  content / social            │
+│  consultation, privacy   │  session React mock only     │
+└──────────────────────────┴──────────────────────────────┘
 ```
 
 ## Component boundaries
@@ -40,23 +35,28 @@ Single **Next.js App Router** application: static marketing pages, client island
 | `CategoryMotion` | Client | Category-page GSAP (`useGSAP`, matchMedia, reduced motion) |
 | `ConsultationForm` | Client | Form state, accessibility, submit |
 | `submitConsultationForm` | Server Action | Validation, rate limit, email |
+| `AdminPreviewProvider` | Client | Session mock products, content clones, media order |
+| `AdminShell` / views | Client | Isolated workspace chrome and six demo screens |
 
-**Coupling:** Homepage sections import images directly from `assets/`. Category pages use `CategoryMedia` for product slots and optional inspiration imports.
+**Coupling:** Homepage sections import images directly from `assets/`. Category pages use `CategoryMedia` for product slots and optional inspiration imports. Admin preview imports a subset of those stills plus About/Architects images; it must not import the large unused JPEG or MP4s.
 
 ## Routing and navigation
 
 - File-system routing under `src/app/`.
-- Shared layout wraps all pages with the same header/footer (consultation/privacy use their own `<main id="main-content">`—duplicate skip target id per page, which is acceptable when one main per document).
+- Marketing layout (`(marketing)`) wraps public pages with skip-link, header, footer, and `SiteScrollShell` (consultation/privacy use their own `<main id="main-content">`—duplicate skip target id per page, which is acceptable when one main per document).
+- Admin preview is a **sibling** of `(marketing)`, not a child, so it does not inherit site chrome.
 - In-page anchors on `/` for systems, approach, architects, atmospheres.
 - Category routes: `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing`.
 - Editorial routes: `/about`, `/architects`. Contact remains `/consultation`.
-- Route map centralized in `src/lib/brand.ts`.
+- Admin demo: `/admin-preview` and child routes. Not listed in `brand.ts` `routes`.
+- Public route map centralized in `src/lib/brand.ts`.
 
 ## State management
 
 - **No** Redux/Zustand/React Query.
 - Consultation: React `useActionState` + server-returned form state (`form-state.ts`).
 - GSAP: ephemeral timeline inside `useGSAP`; DOM `data-*` hooks for selectors.
+- Admin preview: React context (`AdminPreviewProvider`). In-memory only; refresh resets. No `localStorage`.
 
 ## Styling architecture
 
@@ -84,8 +84,9 @@ Keep new motion behind the same approval process (`.cursor/rules/gsap-animation.
 | `src/lib/content/index.ts` | Re-exports content helpers |
 | `src/content/` | Empty placeholder |
 | Homepage marketing copy | Still inline in TSX |
+| `src/lib/admin-preview/` | Session mock types/seed/media catalog (does not persist) |
 
-Future catalogue/admin can replace the category module without changing `CategoryPage` layout. Family `detailHref` is reserved and unset. See `docs/PRODUCT_CATEGORIES.md`.
+Future catalogue/admin can replace the category module without changing `CategoryPage` layout. Family `detailHref` is reserved and unset. See `docs/PRODUCT_CATEGORIES.md`. The `/admin-preview` UI is a disposable prototype of editor chrome, not the persistence layer.
 
 ## Email and security (consultation)
 
@@ -110,14 +111,15 @@ Bot mitigation: honeypot, minimum form duration, rate limit—not a CAPTCHA laye
 
 1. **Static generation** suits marketing; product catalog may need dynamic segments + ISR.
 2. **Asset imports** from outside `public/` work with Next but tie media to build graph—large unused files still affect repo size, not bundle, until imported.
-3. **Single layout**—future section-specific headers or footers need layout groups (`app/(marketing)/`, etc.).
+3. **Route groups**—`(marketing)` vs `admin-preview` is in place. Do not re-wrap admin with `SiteHeader`/`SiteFooter`.
 4. **No i18n** framework present.
+5. **Admin preview on production** is unauthenticated URL space. Etap 3 must add a real auth/data boundary; do not “just connect” the mock provider to Postgres.
 
-## Recommended structural evolution (Etap 2+)
+## Recommended structural evolution (Etap 3+)
 
-- Route groups for marketing vs. admin (later).
-- `routes` + optional `navConfig` array driving header/footer (DRY).
+- Persistence and auth behind a real admin (or headless CMS), separate from the Etap 2.5 mock.
+- `routes` + optional `navConfig` array driving header/footer (DRY). Keep `/admin-preview` out of public nav until a staff tool exists.
 - `components/motion/` for approved shared GSAP helpers.
 - `lib/content/` for loaders and normalized types.
 
-These are recommendations only; the current flat structure is appropriate for the existing scope.
+These are recommendations only. Do not treat the current mock provider as the Etap 3 content layer.

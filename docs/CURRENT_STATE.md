@@ -1,6 +1,6 @@
 # Current state (implementation audit)
 
-*Audit date: 2026-11-04 (About / Architects + Etap 1 engineering close). Previous baselines 2026-10-30 (category pages) and 2026-10-29. Typecheck and lint passed. Agent browser tools were not available in this pass, so visual/CWV/GSAP runtime verification is still open for the owner.*
+*Audit date: 2026-11-05 (Etap 2.5 admin preview). Previous baselines 2026-11-04 (About / Architects + Etap 1 engineering close), 2026-10-30 (category pages), and 2026-10-29. Lint passed on this pass. HTTP 200 confirmed for public and `/admin-preview` routes against localhost. Interactive agent browser MCP was unavailable in this pass; visual/CWV/GSAP runtime sign-off remains with the owner.*
 
 ## Stack
 
@@ -19,13 +19,17 @@ Next config enables `cacheComponents` and `partialPrefetching`.
 ## Repository layout
 
 ```
-src/app/              App Router pages and Server Actions
+src/app/
+  layout.tsx          Root: fonts, tokens, body only
+  (marketing)/        Public pages + layout (skip-link, SiteScrollShell, header/footer)
+  admin-preview/      Frontend-only CMS demo (isolated workspace)
 src/components/
   home/               Homepage sections (Hero, HomePage, SignatureSequence)
   categories/         Shared category page, media slots, page GSAP
   site/               Header, footer, consultation form
   motion/             SiteScrollShell, ScrollDriftFigure, homepage section speeds
-src/lib/              brand, metadata, consultation, email, env, category content
+  admin-preview/      Admin demo shell and views
+src/lib/              brand, metadata, consultation, email, env, category content, admin-preview mocks
 src/styles/           reset, tokens, global
 src/content/          Placeholder (.gitkeep)
 assets/               Read-only source media (imported into Next where used)
@@ -46,11 +50,17 @@ public/               Empty except .gitkeep (no static media served from here ye
 | `/architects` | Static | For architects editorial page |
 | `/consultation` | Static shell; form posts Server Action | Lead capture (also the contact channel) |
 | `/privacy` | Static | Draft privacy notice |
+| `/admin-preview` | Static shell; client mock state | Frontend CMS demo (overview) |
+| `/admin-preview/products` | Client | Sample products |
+| `/admin-preview/categories` | Client | Category index |
+| `/admin-preview/media` | Client | Media library demo |
+| `/admin-preview/content` | Client | About / Architects session copies |
+| `/admin-preview/social` | Static copy | Coming-soon placeholder |
 | `/_not-found` | Default | 404 |
 
-No product-detail or separate `/contact` route—consultation still serves contact intent. Category IA is documented in `docs/PRODUCT_CATEGORIES.md`. About and Architects share `EditorialPage` (no GSAP).
+No product-detail or separate `/contact` route—consultation still serves contact intent. Category IA is documented in `docs/PRODUCT_CATEGORIES.md`. About and Architects share `EditorialPage` (no GSAP). Admin preview is documented in `docs/ADMIN_PREVIEW.md` and is **not** in public nav.
 
-Central route constants: `src/lib/brand.ts` (`routes.home`, `about`, `architects`, `windows`, `slidingDoors`, `entranceDoors`, `architecturalGlazing`, `consultation`, `privacy`).
+Central route constants: `src/lib/brand.ts` (`routes.home`, `about`, `architects`, `windows`, `slidingDoors`, `entranceDoors`, `architecturalGlazing`, `consultation`, `privacy`). `/admin-preview` is intentionally omitted from `routes`.
 
 ## Homepage composition
 
@@ -89,14 +99,16 @@ Plugins register once in `src/lib/gsap/register-client-plugins.ts` (`ScrollTrigg
 
 ## Styles, fonts, responsiveness
 
-- **Fonts:** Google fonts via `next/font` in `layout.tsx` (Newsreader, Source Sans 3).
+- **Fonts:** Google fonts via `next/font` in the root `layout.tsx` (Newsreader, Source Sans 3).
 - **Tokens:** Colors, spacing scale, page gutter, focus ring in `tokens.css`; utilities (`.eyebrow`, `.button`, `.text-link`) in `global.css`.
 - **Layout:** Editorial 12-column grids on homepage sections; component-level breakpoints in module CSS.
-- **Accessibility (code review):** Skip link to `#main-content`, `aria-labelledby` on sections, alt text on images, consultation form field errors and status region (client component).
+- **Accessibility (code review):** Marketing skip link to `#main-content`; admin skip link to `#admin-main-content`. `aria-labelledby` on sections, alt text on images, consultation form field errors and status region (client component).
 
 ## Assets
 
-### Used in application (10 JPEGs)
+### Used in application (12 JPEGs on public + admin preview)
+
+Public pages still use the ten imports below. Admin preview also shows `greyson-growth-yRcRrCIqxtw-unsplash.jpg` and `miguel-luis-r6uVcUq0I8E-unsplash.jpg` (already used on About / Architects) through the media catalog.
 
 Imported from `assets/` through `next/image` or `getImageProps`:
 
@@ -112,20 +124,24 @@ Imported from `assets/` through `next/image` or `getImageProps`:
 | `bundo-kim-MmagnTelMyo-unsplash.jpg` | Windows category inspiration |
 | `zhisheng-deng-W8FPl06Q4F4-unsplash.jpg` | Sliding doors category inspiration |
 | `naomi-august-a14NxeTfMXE-unsplash.jpg` | Architectural glazing inspiration |
+| `greyson-growth-yRcRrCIqxtw-unsplash.jpg` | About page + admin media catalog |
+| `miguel-luis-r6uVcUq0I8E-unsplash.jpg` | Architects page + admin media catalog |
 
 Product-family slots use designed CSS/SVG placeholders (`CategoryMedia`). Entrance inspiration uses the same constructed figure. Next.js optimizes imported JPEGs at build/dev time.
 
-### Present but unused in code
+Admin preview lists the ~13.4 MB `heng-chiu` still and the four MP4s as **metadata-only** rows (not imported, not decoded).
 
-- **16 additional JPEGs** in `assets/` (including several multi-MB sources, e.g. ~13 MB `heng-chiu-O0-nO2ipXAg-unsplash.jpg`).
-- **4 MP4 videos** (5–33 MB each); **not referenced** in `src/`—available for future hero or ambient sections.
+### Present but unused as rendered media
+
+- **Additional JPEGs** in `assets/` beyond the twelve imported stills (including ~13 MB `heng-chiu-O0-nO2ipXAg-unsplash.jpg`, metadata-only in admin preview).
+- **4 MP4 videos** (5–33 MB each); not played in `src/`—metadata rows in admin preview only.
 
 See `docs/ASSET_GUIDELINES.md` for size inventory and delivery recommendations.
 
 ## Consultation flow
 
 - **UI:** `ConsultationForm.tsx` — `useActionState`, honeypot, minimum time on form before submit, field-level errors.
-- **Server:** `src/app/consultation/actions.ts` — origin check, env-gated Resend send, in-memory rate limit per IP/email.
+- **Server:** `src/app/(marketing)/consultation/actions.ts` — origin check, env-gated Resend send, in-memory rate limit per IP/email.
 - **Env:** `.env.example` — `RESEND_API_KEY`, `CONSULTATION_FROM_EMAIL`, `CONSULTATION_TO_EMAIL`.
 - **Privacy:** Draft at `/privacy` references form processing and Resend.
 
@@ -133,24 +149,26 @@ Production gaps documented in `README.md` (shared rate limiter, legal finalizati
 
 ## Scripts and checks
 
-| Script | Command | Result (2026-10-29) |
+| Script | Command | Result (2026-11-05) |
 | --- | --- | --- |
 | `typecheck` | `tsc --noEmit` | Pass |
 | `lint` | `eslint .` | Pass |
-| `build` | `next build` | Pass (2026-10-30); static routes for `/`, `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing`, `/consultation`, `/privacy` |
+| `build` | `next build` | Pass on prior admin implementation pass (static public + `/admin-preview` routes). Re-run before release. |
 | Tests | — | **No test runner configured** |
 
 ## Git history (snapshot)
 
-- Branch: `main`
-- Latest commit at previous audit: `2c4dbd2`. Subsequent local history includes motion work (`7b984a5`) and this category-page milestone.
+- Branch: `main` tracking `github/main`
+- Latest published commit at this audit: `ea0fada` (`hub test build`). Admin preview work is the following local milestone.
 
 ## Known limitations and technical debt
 
 1. **Consultation rate limiting** is in-process only—not safe for multi-instance serverless without replacement.
 2. **Brand/contact** placeholders (`contact.email` / `phone` null in `brand.ts`).
-3. **Content layer** — category copy in `src/lib/content/categories.ts`; About/Architects in `about.ts` / `architects.ts`; homepage copy remains inline in TSX. `src/content/` is still empty. No CMS or admin.
+3. **Content layer** — category copy in `src/lib/content/categories.ts`; About/Architects in `about.ts` / `architects.ts`; homepage copy remains inline in TSX. `src/content/` is still empty. `/admin-preview` is a session mock (Etap 2.5), not a CMS.
 4. **Product detail routes** do not exist yet. Family blocks are in-page articles; `detailHref` is reserved and unset.
 5. **Videos and most photos** unused—risk of accidental commit bloat if served without optimization strategy.
 6. **Motion verification** — code audit 2026-11-04 matches Etap 1 structure (pin/scrub, reduced-motion fallback, smoother homepage-only). Runtime browser verification and Core Web Vitals were not measured (agent browser tools unavailable). Pre-existing uncommitted `SiteScrollShell` hydration/scroll-reset work was left untouched.
 7. **visual-design.mdc** frontmatter appears duplicated/conflicting (`alwaysApply` true and false)—see architecture/decisions docs; rule behavior in Cursor may be ambiguous until cleaned up (recommendation only; not changed in this pass).
+8. **Admin preview** is unauthenticated. If the Next app is deployed, `/admin-preview` is URL-reachable despite `noindex`. Not suitable as a staff tool (Etap 3).
+9. **Hosting** — Vercel project IDs live in `azure-pipelines.yml`; GitHub remote exists for owner-stated Vercel Git integration. See `docs/DEPLOYMENT.md`. O-TECH-01 closed as Vercel.

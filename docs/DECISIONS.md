@@ -12,7 +12,11 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | D-TECH-02 | npm as package manager; scripts for dev/build/lint/typecheck | `package.json` |
 | D-TECH-03 | GSAP + ScrollTrigger for homepage signature sequence; ScrollSmoother homepage-only; category pages use `CategoryMotion` without pins | `SignatureSequence.tsx`, `SiteScrollShell.tsx`, `CategoryMotion.tsx` |
 | D-IA-01 | Category URLs are `/windows`, `/sliding-doors`, `/entrance-doors`, `/architectural-glazing` | `brand.ts`, App Router pages |
-| D-IA-02 | About is `/about`; For architects is `/architects`; Contact remains `/consultation`; no coming-soon template | `brand.ts`, `src/app/about`, `src/app/architects` |
+| D-IA-02 | About is `/about`; For architects is `/architects`; Contact remains `/consultation`; no coming-soon template | `brand.ts`, `src/app/(marketing)/about`, `src/app/(marketing)/architects` |
+| D-IA-03 | Admin preview lives at `/admin-preview`; not in public nav and not in `brand.ts` `routes` | `src/app/admin-preview/`, `SiteHeader.tsx`, `brand.ts` |
+| D-TECH-07 | Marketing vs admin isolation uses App Router `(marketing)` route group, not a `SiteFrame` wrapper | `src/app/(marketing)/layout.tsx`, `src/app/layout.tsx` |
+| D-ADMIN-01 | `/admin-preview` is a session-only frontend mock (no auth, DB, persistence, or fake login). It is not Etap 3. | `docs/ADMIN_PREVIEW.md`, `AdminPreviewProvider.tsx` |
+| D-DEPLOY-01 | Production host is Vercel. GitHub remote + Azure Pipelines both exist; owner publishes remotes. | `docs/DEPLOYMENT.md`, `azure-pipelines.yml` |
 | D-CONTENT-02 | Descriptive family names only; no manufacturer brands as product names | `src/lib/content/categories.ts` |
 | D-CONTENT-03 | No invented specs (U-values, sizes, security, acoustics, guarantees) on category pages | `docs/PRODUCT_CATEGORIES.md` |
 | D-TECH-04 | Consultation via Server Action + Zod + Resend HTTP API | `actions.ts`, `lib/email/` |
@@ -42,12 +46,12 @@ Format: **Confirmed** = explicitly decided; **Working assumption** = placeholder
 | O-BIZ-01 | Final legal entity and brand name on site? | Launch copy, metadata, email sender |
 | O-BIZ-02 | Target markets and languages? | i18n, compliance docs |
 | O-BIZ-03 | Public phone/email in footer? | `brand.contact` currently null |
-| O-TECH-01 | Production host (Vercel, other)? | Rate limiting, env, edge |
 | O-TECH-02 | Analytics and cookie consent? | Privacy copy, implementation |
 | O-TECH-03 | CRM integration for consultation leads? | Etap 4 vs. manual inbox |
 | O-CONTENT-01 | When to use the 4 unused videos on homepage or elsewhere? | Performance budget, hero design |
 | O-IA-01 | URL plan for product detail pages? About/Architects decided in D-IA-02; categories in D-IA-01. | Etap 3 |
-| O-CMS-01 | Headless CMS vs. custom admin vs. files? | Etap 3 |
+| O-CMS-01 | Headless CMS vs. custom admin vs. files? Etap 2.5 mock does not decide this. | Etap 3 |
+| O-DEPLOY-01 | Canonical publish path: GitHub → Vercel vs Azure Pipelines → Vercel? | Owner deploy workflow |
 
 ---
 

@@ -31,6 +31,7 @@ If you are exploring Etap 2+ features, treat replies as planning until you autho
 - **Homepage** — Treat as production creative work; avoid drive-by redesigns.
 - **Dependencies** — No new packages without stated reason.
 - **Git** — See `git-workflow.mdc` for commit hygiene and safety.
+- **Admin preview** — `/admin-preview` is a session mock. Do not add auth, a database, or public-nav links while implementing demo-only work (`docs/ADMIN_PREVIEW.md`). Use `.cursor/agents/admin-preview-implementer.md` for preview UI edits; do not treat that agent as Etap 3.
 
 ## Animation change protocol
 
@@ -47,6 +48,7 @@ When behavior changes:
 - Update `ROADMAP.md` acceptance checkboxes when milestones complete.
 - Log decisions in `DECISIONS.md` when confirmed.
 - Keep `README.md` entry point accurate for scripts and env vars.
+- Keep `ADMIN_PREVIEW.md` and `DEPLOYMENT.md` aligned with isolation and hosting facts.
 
 ## What “done” means for a task
 

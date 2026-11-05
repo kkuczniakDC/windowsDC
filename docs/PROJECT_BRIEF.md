@@ -42,7 +42,7 @@ Quality bar (target, not all verified in QA):
 | Site chrome | Header, footer, anchor navigation to homepage sections |
 | Project consultation (`/consultation`) | Form UI + Server Action, Zod validation, Resend email (env-dependent) |
 | Privacy notice (`/privacy`) | Pre-launch draft copy |
-| Product catalog, CMS, admin | Not started |
+| Product catalog, CMS, admin | Live CMS not started (Etap 3). Frontend-only `/admin-preview` demo exists (Etap 2.5) |
 | Dedicated Products / About routes | Four category pages plus `/about` and `/architects`; product details not started |
 
 ## Success criteria
@@ -69,5 +69,5 @@ See `docs/DECISIONS.md` for the living register. Highlights:
 - Final brand name, logo, and domain.
 - Markets, languages, and compliance copy.
 - Whether consultation remains email-only or connects to CRM.
-- Hosting platform (affects rate limiting and edge behavior).
+- Hosting is Vercel (`D-DEPLOY-01`); canonical git path (GitHub vs Azure Pipelines) still owner-owned.
 - When and how to introduce hero/ambient **video** from `assets/`.

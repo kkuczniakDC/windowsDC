@@ -1,6 +1,6 @@
 # Southern Windows (working name)
 
-Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, category pages, About and For architects, project consultation, and a draft privacy notice.
+Premium marketing site for architectural windows, doors, and glazing—Warm Editorial homepage with GSAP scroll narrative, category pages, About and For architects, project consultation, a draft privacy notice, and a frontend-only `/admin-preview` demo.
 
 ## Status
 
@@ -11,7 +11,7 @@ Premium marketing site for architectural windows, doors, and glazing—Warm Edit
 | About / Architects | Implemented: `/about`, `/architects` |
 | Consultation (`/consultation`) | Implemented; needs production mail, host rate limits, legal sign-off |
 | Privacy (`/privacy`) | Pre-launch draft |
-| Product catalogue / admin | Not started — see roadmap |
+| Product catalogue / admin | Live CMS not started (Etap 3). Frontend demo at `/admin-preview` — see [`docs/ADMIN_PREVIEW.md`](docs/ADMIN_PREVIEW.md) |
 
 Full audit: [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md).
 
@@ -57,9 +57,9 @@ If any are missing at **submit** time, the form returns an error. Production **b
 
 | Path | Role |
 | --- | --- |
-| `src/app` | App Router pages (`/`, categories, `/about`, `/architects`, `/consultation`, `/privacy`) |
-| `src/components` | UI (`home`, `categories`, `site`, `motion`) |
-| `src/lib` | Brand config, consultation, email, metadata |
+| `src/app` | App Router: `(marketing)` public pages, `admin-preview` demo, root fonts/tokens |
+| `src/components` | UI (`home`, `categories`, `site`, `motion`, `admin-preview`) |
+| `src/lib` | Brand config, consultation, email, metadata, admin-preview mocks |
 | `src/styles` | Tokens and global CSS |
 | `assets/` | **Read-only** source media — see [`docs/ASSET_GUIDELINES.md`](docs/ASSET_GUIDELINES.md) |
 | `docs/` | Project documentation |
@@ -76,6 +76,8 @@ If any are missing at **submit** time, the form returns an error. Production **b
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | App structure, data flow, extension notes |
 | [`docs/WORKFLOW.md`](docs/WORKFLOW.md) | AI-assisted workflow in Cursor |
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Confirmed vs. open decisions |
+| [`docs/ADMIN_PREVIEW.md`](docs/ADMIN_PREVIEW.md) | Frontend-only `/admin-preview` demo (not Etap 3) |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Vercel, git remotes, Azure Pipelines, env |
 | [`docs/ASSET_GUIDELINES.md`](docs/ASSET_GUIDELINES.md) | Media organization and performance |
 
 ## Working in Cursor and Git

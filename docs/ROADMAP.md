@@ -85,6 +85,39 @@ Phases align with the agreed product direction. **Completion status reflects the
 
 ---
 
+## Etap 2.5 — Admin preview (frontend demo)
+
+This is a **presentation prototype**, not the real catalogue/admin. Completing it does **not** complete Etap 3.
+
+### Scope
+
+- `/admin-preview` workspace isolated from marketing chrome (App Router `(marketing)` group vs sibling `admin-preview`).
+- Six screens: overview, products, categories, media, content, social (placeholder).
+- Mock catalogue seeded from `src/lib/content/categories.ts`; entrance doors = one product with six chapters.
+- Session-only React state; persistent demo banner; no fake login.
+- Media: already-imported JPEGs via `next/image`; large still + MP4s as metadata rows.
+
+### Out of scope (this etap)
+
+- PostgreSQL, auth, roles, persistence, uploads, or paid CMS/infra.
+- Public product-detail routes.
+- Adding admin to `brand.ts` routes or public nav.
+- Social publishing (Etap 4).
+- Changes to GSAP choreography, `assets/`, Vercel/Azure deploy config.
+
+### Acceptance criteria
+
+- [x] `/admin-preview` and five child routes render without public header/footer.
+- [x] Public routes still use skip-link + `SiteHeader` / `SiteFooter` / `SiteScrollShell`.
+- [x] Banner states the workspace is a visual prototype and does not save.
+- [x] Refresh resets mock edits.
+- [x] Admin is `noindex`/`nofollow` and absent from public nav.
+- [ ] Owner visual sign-off of the demo on target devices (presentation).
+
+**Status:** *Engineering complete (2026-11-05) as a frontend-only demo.* See `docs/ADMIN_PREVIEW.md`. Live CMS remains Etap 3.
+
+---
+
 ## Etap 3 — Product catalog and admin
 
 ### Scope (future)
@@ -107,7 +140,7 @@ Phases align with the agreed product direction. **Completion status reflects the
 
 ### Out of scope at planning stage
 
-- Implementation of auth, database, or admin UI in this documentation phase.
+- The `/admin-preview` demo from Etap 2.5 is **not** this etap: no auth, no database, no live public catalogue.
 
 ### Decisions required before implementation
 
@@ -120,7 +153,7 @@ Phases align with the agreed product direction. **Completion status reflects the
 | Search / filters | Client vs. server, faceted taxonomy |
 | Compliance | Technical datasheets, CE/market-specific docs |
 
-**Status:** *Requirements only.*
+**Status:** *Requirements only.* Etap 2.5 does not satisfy these criteria.
 
 ---
 
@@ -156,12 +189,15 @@ Phases align with the agreed product direction. **Completion status reflects the
 flowchart LR
   E1[Etap 1 QA and launch prep]
   E2[Etap 2 Routes and IA]
+  E25[Etap 2.5 Admin preview demo]
   E3[Etap 3 Catalog and admin]
   E4[Etap 4 Integrations]
   E1 --> E2
+  E2 --> E25
   E2 --> E3
+  E25 -.-> E3
   E3 --> E4
   E2 -.-> E4
 ```
 
-Etap 4 items that only touch consultation/CRM could start after Etap 1 if prioritized.
+Etap 2.5 informs later admin UX; it is not a substitute for Etap 3. Etap 4 items that only touch consultation/CRM could start after Etap 1 if prioritized.
