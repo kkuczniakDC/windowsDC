@@ -1,0 +1,17 @@
+# Deploy to Vercel (dcwindows) via Azure DevOps extension.
+# Set secret pipeline variable: VERCEL_TOKEN
+# https://vercel.com/docs/git/vercel-for-azure-pipelines
+
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: vercel-deployment-task@3
+    inputs:
+      vercelProjectId: 'prj_xpnKMZgNLLkyZC6ofUmg9CcO0fgC'
+      vercelTeamId: 'team_xVHG2FrAdr7cw18rjohXyykm'
+      vercelToken: $(VERCEL_TOKEN)
+      production: true
