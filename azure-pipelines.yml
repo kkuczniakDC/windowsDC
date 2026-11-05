@@ -2,8 +2,10 @@
 # Set secret pipeline variable: VERCEL_TOKEN
 # https://vercel.com/docs/git/vercel-for-azure-pipelines
 
+
 trigger:
   - main
+
 
 pool:
   vmImage: ubuntu-latest
